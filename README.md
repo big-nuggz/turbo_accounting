@@ -26,3 +26,7 @@ This project is developed in:
 
 - Windows 11
 - Node.js v22.15.0
+
+## Credits
+
+This project uses icons from [heroicons](https://heroicons.com/). Licensed under MIT license.
