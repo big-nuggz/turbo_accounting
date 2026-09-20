@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: cupcake;
+  themes: light --default, dark --prefersdark;
+}
+
+@layer components {
+  .main-container {
+    @apply max-w-7xl grid place-content-center mx-auto;
+  }
 }
