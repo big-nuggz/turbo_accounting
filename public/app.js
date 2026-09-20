@@ -40,18 +40,17 @@ function updateTable(data) {
       <th>Category</th>
     </tr>`;
   table.appendChild(thead);
-  
-  data.spendings.forEach(item => {
-    const tbody = document.createElement('tbody');
-    tbody.innerHTML = `
-      <tr>
-        <td>${item.date}</td>
-        <td>${item.description}</td>
-        <td>${item.amount}</td>
-        <td>${item.category}</td>
-      </tr>`;
-    table.appendChild(tbody);
-  });
+
+  const tbody = document.createElement('tbody');
+  tbody.innerHTML = data.spendings.map(item => `
+    <tr>
+      <td>${item.date}</td>
+      <td>${item.description}</td>
+      <td>${item.amount}</td>
+      <td>${item.category}</td>
+    </tr>
+  `).join('');
+  table.appendChild(tbody);
 }
 
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {
