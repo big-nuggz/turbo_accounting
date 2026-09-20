@@ -1,5 +1,10 @@
 var data = {
-  spendings: []
+  categories: ['income', 'other', 'food', 'medical'], 
+  subscriptions: {
+    monthly: [], 
+    annual: []
+  }, 
+  data: []
 };
 
 function hashChangeHandler() {
@@ -15,7 +20,12 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('DOMContentLoaded', () => {
   hashChangeHandler();
   loadData();
+  resetCalendar();
 });
+
+function resetCalendar() {
+  document.getElementById('date').valueAsDate = new Date();
+}
 
 async function loadData() {
   const response = await fetch('/api/budget');
@@ -24,19 +34,19 @@ async function loadData() {
     data = await response.json();
   }
 
-  data = cleanDates(data);
-  updateTable(data);
+  cleanDates();
+  updateTable();
 }
 
-function cleanDates(data) {
-  data.spendings.map(item => {
+function cleanDates() {
+  data.data.map(item => {
     item.date = new Date(item.date).toISOString().split('T')[0];
   });
 
   return data;
 }
 
-function updateTable(data) {
+function updateTable() {
   const table = document.getElementById('expenseTable');
   table.innerHTML = '';
  
@@ -51,7 +61,7 @@ function updateTable(data) {
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  tbody.innerHTML = data.spendings.map(item => `
+  tbody.innerHTML = data.data.map(item => `
     <tr>
       <td>${item.date}</td>
       <td>${item.description}</td>
@@ -71,7 +81,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   const category = document.getElementById('category').value;
 
   // 2. Append new item
-  data.spendings.push({ id: Date.now(), description, amount, category, date });
+  data.data.push({ id: Date.now(), description, amount, category, date });
 
   // 3. Save back to server
   const response = await fetch('/api/budget', {
