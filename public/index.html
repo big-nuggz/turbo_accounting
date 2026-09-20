@@ -13,56 +13,95 @@
     <input id="sidebar-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
 
-      <!-- menu button -->
-      <label for="sidebar-drawer" class="drawer-button">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-      </label>
+      <!-- content area -->
+      <div class="bg-base-200 min-h-screen flex flex-col">
 
-      <!-- main content -->
-      <div class="base-200">
+        <!-- menu button -->
+        <label for="sidebar-drawer" class="drawer-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </label>
 
+        <!-- ============= -->
         <!-- THE MAIN PAGE -->
-        <div id="main" class="hidden target:block">
-          <div class="main-container">
+        <!-- ============= -->
+        <div id="main" class="hidden target:block grow">
+          <div class="content-container">
 
-            <form id="expenseForm" class="grid md:grid-cols-5 grid-cols-3">
-              <label class="input">
-                <span class="label">date</span>
-                <input id="date" type="date" />
+            <!-- layout grid -->
+            <div class="grid md:grid-cols-2 grid-cols-1">
 
-                <!-- set date to today -->
-                <script>
-                  document.getElementById('date').valueAsDate = new Date();
-                </script>
+              <!-- input form & table -->
+              <div class="card col-span-1 bg-base-100 shadow-sm h-auto m-1 p-1">
 
-              </label>
-              <input type="text" id="description" placeholder="pasta" required class="input col-span-1"/>
-              <input type="number" id="amount" placeholder="980" required class="input col-span-1"/>
-              <select id="category" class="select col-span-1">
-                <option disabled selected>category</option>
-                <option>food</option>
-                <option>medical</option>
-                <option>investment</option>
-              </select>
-              <button class="btn col-span-1">add</button>
-            </form>
+                <!-- form -->
+                <form id="expenseForm" class="grid grid-cols-6">
+                  <label class="input col-span-2 m-1">
+                    <span class="label">date</span>
+                    <input id="date" type="date" />
 
-            <ul id="expenseList"></ul>
+                    <!-- set date to today -->
+                    <script>
+                      document.getElementById('date').valueAsDate = new Date();
+                    </script>
 
-            <div class="card w-96 bg-base-100 card-md shadow-sm">
-              <div class="card-body">
-                <canvas id="monthlyBreakdownDoughnut" class="w-max h-max"></canvas>
+                  </label>
+                  <input type="text" id="description" placeholder="pasta" required class="input col-span-1 m-1"/>
+                  <input type="number" id="amount" placeholder="980" required class="input col-span-1 m-1"/>
+                  <select id="category" class="select col-span-1 m-1">
+                    <option disabled selected>category</option>
+                    <option>food</option>
+                    <option>medical</option>
+                    <option>investment</option>
+                  </select>
+                  <button class="btn col-span-1 m-1">add</button>
+                </form>
+
+                <!-- table of expense  data -->
+                <div class="overflow-x-auto">
+                  <table id="expenseTable" class="table table-zebra">
+                    <!-- head (will be replaced by js) -->
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+
               </div>
-            </div>
 
+              <!-- charts -->
+              <div class="flex md:flex-row flex-col col-span-1">
+
+                <div class="card w-auto bg-base-100 card-xs shadow-sm m-1">
+                  <div class="card-body">
+                    <canvas id="monthlyBreakdownDoughnutCategories" class="w-max h-max"></canvas>
+                  </div>
+                </div>
+
+                <div class="card w-auto bg-base-100 card-xs shadow-sm m-1">
+                  <div class="card-body">
+                    <canvas id="monthlyBreakdownDoughnutOverview" class="w-max h-max"></canvas>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
           </div>
         </div>
 
+        <!-- ============ -->
         <!-- SUMMARY PAGE -->
-        <div id="summary" class="hidden target:block">
-          <div class="main-container">
+        <!-- ============ -->
+        <div id="summary" class="hidden target:block grow">
+          <div class="content-container">
             some cool charts will be here
           </div>
         </div>
@@ -73,6 +112,7 @@
             <p>Made by <a href="https://github.com/big-nuggz">Mika Novakovic</a></p>
           </aside>
         </footer>
+
       </div>  
     </div>
     <div class="drawer-side">

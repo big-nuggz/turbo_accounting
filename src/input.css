@@ -5,7 +5,7 @@
 }
 
 @layer components {
-  .main-container {
-    @apply max-w-7xl grid place-content-center mx-auto;
+  .content-container {
+    @apply max-w-7xl place-content-center mx-auto;
   }
 }

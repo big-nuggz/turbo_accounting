@@ -19,13 +19,30 @@ async function loadData() {
     data = await response.json();
   }
   
-  const list = document.getElementById('expenseList');
-  list.innerHTML = '';
+  const table = document.getElementById('expenseTable');
+  table.innerHTML = '';
+ 
+  const thead = document.createElement('thead');
+  thead.innerHTML = `
+    <tr>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Category</th>
+    </tr>`;
+  table.appendChild(thead);
   
   data.spendings.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = `${item.category}: ${item.desc} - $${item.amount}`;
-    list.appendChild(li);
+    const tbody = document.createElement('tbody');
+    
+    tbody.innerHTML = `
+    <tr>
+      <td>${item.date}</td>
+      <td>${item.description}</td>
+      <td>${item.amount}</td>
+      <td>${item.category}</td>
+    </tr>`;
+    table.appendChild(tbody);
   });
 }
 
