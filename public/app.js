@@ -46,7 +46,7 @@ function updateTable(data) {
     <tr>
       <td>${item.date}</td>
       <td>${item.description}</td>
-      <td>${item.amount}</td>
+      <td class="text-right">${item.amount}</td>
       <td>${item.category}</td>
     </tr>
   `).join('');
