@@ -24,7 +24,14 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function resetCalendar() {
-  document.getElementById('date').valueAsDate = new Date();
+  const today = new Date();
+  const localDate = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'), 
+    String(today.getDate()).padStart(2, '0'), 
+  ].join('-');
+
+  document.getElementById('date').value = localDate;
 }
 
 async function loadData() {
