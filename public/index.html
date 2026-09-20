@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Turbo Accounting</title>
   <link rel="stylesheet" href="style.css">
-
   <script src="/js/chart.js"></script>
 </head>
 <body>
@@ -17,10 +16,8 @@
       <div class="bg-base-200 min-h-screen flex flex-col">
 
         <!-- menu button -->
-        <label for="sidebar-drawer" class="drawer-button">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
+        <label for="sidebar-drawer" class="drawer-button m-2">
+          <i class="bi bi-list"></i>
         </label>
 
         <!-- ============= -->
@@ -37,25 +34,35 @@
 
                 <!-- form -->
                 <form id="expenseForm" class="grid grid-cols-6">
-                  <label class="input col-span-2 m-1">
-                    <span class="label">date</span>
-                    <input id="date" type="date" />
+                  <div class="col-span-2 m-1">
+                    <label class="input">
+                      <span class="label">date</span>
+                      <input id="date" type="date" />
 
-                    <!-- set date to today -->
-                    <script>
-                      document.getElementById('date').valueAsDate = new Date();
-                    </script>
+                      <!-- set date to today -->
+                      <script>
+                        document.getElementById('date').valueAsDate = new Date();
+                      </script>
 
-                  </label>
-                  <input type="text" id="description" placeholder="pasta" required class="input col-span-1 m-1"/>
-                  <input type="number" id="amount" placeholder="980" required class="input col-span-1 m-1"/>
-                  <select id="category" class="select col-span-1 m-1">
-                    <option disabled selected>category</option>
-                    <option>food</option>
-                    <option>medical</option>
-                    <option>investment</option>
-                  </select>
-                  <button class="btn col-span-1 m-1">add</button>
+                    </label>
+                  </div>
+                  <div class="col-span-1 my-1 mr-1">
+                    <input type="text" id="description" placeholder="pasta" required class="input"/>
+                  </div>
+                  <div class="col-span-1 my-1 mr-1">
+                    <input type="number" id="amount" placeholder="980" required class="input"/>
+                  </div>
+                  <div class="col-span-1 my-1 mr-1">
+                    <select id="category" class="select">
+                      <option disabled selected>category</option>
+                      <option>food</option>
+                      <option>medical</option>
+                      <option>investment</option>
+                    </select>
+                  </div>
+                  <div class="col-span-1 my-1 mr-1">
+                    <button class="btn">add</button>
+                  </div>
                 </form>
 
                 <!-- table of expense  data -->
@@ -77,17 +84,17 @@
               </div>
 
               <!-- charts -->
-              <div class="flex md:flex-row flex-col col-span-1">
+              <div class="grid md:grid-cols-2 grid-cols-1 col-span-1">
 
-                <div class="card w-auto bg-base-100 card-xs shadow-sm m-1">
+                <div class="col-span-1 card bg-base-100 shadow-sm m-1">
                   <div class="card-body">
-                    <canvas id="monthlyBreakdownDoughnutCategories" class="w-max h-max"></canvas>
+                    <canvas id="monthlyBreakdownChartCategories" class="w-max h-max"></canvas>
                   </div>
                 </div>
 
-                <div class="card w-auto bg-base-100 card-xs shadow-sm m-1">
+                <div class="col-span-1 card bg-base-100 shadow-sm m-1">
                   <div class="card-body">
-                    <canvas id="monthlyBreakdownDoughnutOverview" class="w-max h-max"></canvas>
+                    <canvas id="monthlyBreakdownChartOverview" class="w-max h-max"></canvas>
                   </div>
                 </div>
 
@@ -109,7 +116,10 @@
         <!-- footer -->
         <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
           <aside>
-            <p>Made by <a href="https://github.com/big-nuggz">Mika Novakovic</a></p>
+            <p>
+              Made by Mika Novakovic
+              <a href="https://github.com/big-nuggz"><i class="bi bi-github"></i></a>
+            </p>
           </aside>
         </footer>
 

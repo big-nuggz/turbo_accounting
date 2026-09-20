@@ -8,9 +8,14 @@ function hashChangeHandler() {
   }
 }
 
-window.addEventListener('hashchange', hashChangeHandler);
-window.addEventListener('DOMContentLoaded', hashChangeHandler);
-window.addEventListener('DOMContentLoaded', loadData);
+window.addEventListener('hashchange', () => {
+  hashChangeHandler();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  hashChangeHandler();
+  loadData();
+});
 
 async function loadData() {
   const response = await fetch('/api/budget');
@@ -19,6 +24,10 @@ async function loadData() {
     data = await response.json();
   }
   
+  updateTable(data);
+}
+
+function updateTable(data) {
   const table = document.getElementById('expenseTable');
   table.innerHTML = '';
  
@@ -34,14 +43,13 @@ async function loadData() {
   
   data.spendings.forEach(item => {
     const tbody = document.createElement('tbody');
-    
     tbody.innerHTML = `
-    <tr>
-      <td>${item.date}</td>
-      <td>${item.description}</td>
-      <td>${item.amount}</td>
-      <td>${item.category}</td>
-    </tr>`;
+      <tr>
+        <td>${item.date}</td>
+        <td>${item.description}</td>
+        <td>${item.amount}</td>
+        <td>${item.category}</td>
+      </tr>`;
     table.appendChild(tbody);
   });
 }

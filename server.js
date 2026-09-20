@@ -19,6 +19,7 @@ liveReloadServer.server.once("connection", () => {
 });
 
 app.use('/js/chart.js', express.static(path.join(__dirname, 'node_modules/chart.js/dist/chart.umd.min.js')));
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/font/fonts')));
 app.use(connectLiveReload());
 
 app.use(express.json());

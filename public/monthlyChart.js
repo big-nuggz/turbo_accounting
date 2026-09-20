@@ -1,5 +1,5 @@
 function renderMonthlyBreakdownCategories() {
-  const ctx = document.getElementById('monthlyBreakdownDoughnutCategories');
+  const ctx = document.getElementById('monthlyBreakdownChartCategories');
 
   const donut = new Chart(
     ctx, {
@@ -16,7 +16,7 @@ function renderMonthlyBreakdownCategories() {
 }
 
 function renderMonthlyBreakdownOverview() {
-  const ctx = document.getElementById('monthlyBreakdownDoughnutOverview');
+  const ctx = document.getElementById('monthlyBreakdownChartOverview');
   
   const donut = new Chart(
     ctx, {
@@ -32,5 +32,7 @@ function renderMonthlyBreakdownOverview() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", renderMonthlyBreakdownCategories)
-window.addEventListener("DOMContentLoaded", renderMonthlyBreakdownOverview)
+window.addEventListener("DOMContentLoaded", () => {
+  renderMonthlyBreakdownCategories();
+  renderMonthlyBreakdownOverview();
+});

@@ -4,6 +4,8 @@
   themes: light --default, dark --prefersdark;
 }
 
+@import "bootstrap-icons/font/bootstrap-icons";
+
 @layer components {
   .content-container {
     @apply max-w-7xl place-content-center mx-auto;

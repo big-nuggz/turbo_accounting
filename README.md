@@ -29,4 +29,4 @@ This project is developed in:
 
 ## Credits
 
-This project uses icons from [heroicons](https://heroicons.com/). Licensed under MIT license.
+This project uses icons from [Bootstrap Icons](https://icons.getbootstrap.com/). Licensed under MIT license.
