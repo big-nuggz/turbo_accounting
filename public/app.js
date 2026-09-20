@@ -23,8 +23,17 @@ async function loadData() {
   if (response.ok) {
     data = await response.json();
   }
-  
+
+  data = cleanDates(data);
   updateTable(data);
+}
+
+function cleanDates(data) {
+  data.spendings.map(item => {
+    item.date = new Date(item.date).toISOString().split('T')[0];
+  });
+
+  return data;
 }
 
 function updateTable(data) {
