@@ -1,49 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cupcake">
+<html lang="en" data-theme="corporate">
 <head>
   <meta charset="UTF-8">
-  <title>Local Accounting</title>
+  <title>Turbo Accounting</title>
   <link rel="stylesheet" href="style.css">
+
+  <script src="/js/chart.js"></script>
 </head>
 <body>
   <!-- nav bar -->
   <div class="drawer">
-    <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
+    <input id="sidebar-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
 
-      <!-- Page content here -->
-      <label for="my-drawer-1" class="btn drawer-button">Open drawer</label>
-      
+      <!-- menu button -->
+      <label for="sidebar-drawer" class="drawer-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </label>
+
       <!-- main content -->
-      <div class="max-w-7xl grid place-content-center">
-        <div id="summary"></div>
+      <div class="base-200">
 
-        <form id="expenseForm" class="grid grid-cols-4">
-          <input type="text" id="description" placeholder="pasta" required class="input col-span-1"/>
-          <input type="number" id="amount" placeholder="980" required class="input col-span-1"/>
-          <select class="select col-span-1">
-            <option disabled selected>category</option>
-            <option>food</option>
-            <option>medical</option>
-            <option>investment</option>
-          </select>
-          <button class="btn col-span-1">add</button>
-        </form>
+        <!-- THE MAIN PAGE -->
+        <div id="main" class="hidden target:block">
+          <div class="main-container">
 
-        <ul id="expenseList"></ul>
-      </div>
+            <form id="expenseForm" class="grid md:grid-cols-5 grid-cols-3">
+              <label class="input">
+                <span class="label">date</span>
+                <input id="date" type="date" />
 
+                <!-- set date to today -->
+                <script>
+                  document.getElementById('date').valueAsDate = new Date();
+                </script>
+
+              </label>
+              <input type="text" id="description" placeholder="pasta" required class="input col-span-1"/>
+              <input type="number" id="amount" placeholder="980" required class="input col-span-1"/>
+              <select id="category" class="select col-span-1">
+                <option disabled selected>category</option>
+                <option>food</option>
+                <option>medical</option>
+                <option>investment</option>
+              </select>
+              <button class="btn col-span-1">add</button>
+            </form>
+
+            <ul id="expenseList"></ul>
+
+            <div class="card w-96 bg-base-100 card-md shadow-sm">
+              <div class="card-body">
+                <canvas id="monthlyBreakdownDoughnut" class="w-max h-max"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SUMMARY PAGE -->
+        <div id="summary" class="hidden target:block">
+          <div class="main-container">
+            some cool charts will be here
+          </div>
+        </div>
+
+        <!-- footer -->
+        <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+          <aside>
+            <p>Made by <a href="https://github.com/big-nuggz">Mika Novakovic</a></p>
+          </aside>
+        </footer>
+      </div>  
     </div>
     <div class="drawer-side">
-      <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
+      <label for="sidebar-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
       <ul class="menu bg-base-200 min-h-full w-80 p-4">
         <!-- Sidebar content here -->
-        <li><a>Main</a></li>
-        <li><a>Charts</a></li>
+        <li><a href="#main">Main</a></li>
+        <li><a href="#summary">Annual Summary</a></li>
       </ul>
     </div>
   </div>
-
+  
+  <script src="monthlyChart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
