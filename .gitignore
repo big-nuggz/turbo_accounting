@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 
 # vscode
 .vscode
+
+# server side data
+data
