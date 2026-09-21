@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+  themes: emerald --default, business --prefersdark;
 }
 
 @import "bootstrap-icons/font/bootstrap-icons";

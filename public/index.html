@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- <html lang="en" data-theme="cupcake"> -->
 <html lang="en" data-theme="">
 <head>
   <meta charset="UTF-8">
@@ -14,57 +13,66 @@
     <div class="drawer-content">
 
       <!-- content area -->
-      <div class="bg-base-200 min-h-screen flex flex-col">
+      <div class="min-h-screen flex flex-col">
 
         <!-- header  -->
-        <header class="bg-primary border-b-2 border-peimary-content mb-2">
+        <header class="bg-base-100 mb-6 border-b-2 border-base-300 sticky top-0 z-10">
           <!-- menu button -->
           <label for="sidebar-drawer" class="drawer-button m-2 absolute">
-            <i class="bi bi-list text-3xl text-primary-content"></i>
+            <i class="bi bi-list text-3xl"></i>
           </label>
 
-          <p class="text-primary-content text-3xl font-bold m-2 text-center">TURBO ACCOUNTING</p>
+          <p class="text-3xl m-2 text-center">TURBO ACCOUNTING</p>
         </header>
 
         <!-- ============= -->
         <!-- THE MAIN PAGE -->
         <!-- ============= -->
-        <div id="main" class="hidden target:block grow">
+        <div id="home" class="hidden target:block grow">
           <div class="content-container">
 
+            <!-- page month selector -->
+            <div>
+              <button id="buttonLastMonth" class="btn"><i class="bi bi-arrow-left"></i></button>
+              <label class="select w-auto">
+                <span class="label">Year</span>
+                <select id="pageYearSelector">
+                </select>
+              </label>
+              <label class="select w-auto">
+                <span class="label">Month</span>
+                <select id="pageMonthSelector">
+                </select>
+              </label>
+              <button id="buttonGoToMonth" class="btn">GO</button>
+              <button id="buttonNextMonth" class="btn"><i class="bi bi-arrow-right"></i></button>
+            </div>
+
+            <div class="divider"></div>
+
             <!-- layout grid -->
-            <div class="grid md:grid-cols-2 grid-cols-1">
+            <div class="flex flex-col md:flex-row">
 
               <!-- input form & table -->
-              <div class="card col-span-1 bg-base-100 shadow-sm h-auto m-1">
+              <div class="bg-base-100 h-auto m-1 grow">
 
                 <!-- form -->
-                <form id="expenseForm" class="grid grid-cols-6 mb-1">
-                  <div class="col-span-2 m-1">
-                    <label class="input">
-                      <span class="label">Date</span>
-                      <input id="date" type="date" />
-                    </label>
-                  </div>
-                  <div class="col-span-1 my-1 mr-1">
-                    <input type="text" id="description" placeholder="pasta" class="input"/>
-                  </div>
-                  <div class="col-span-1 my-1 mr-1">
-                    <input type="number" id="amount" placeholder="980" required class="input"/>
-                  </div>
-                  <div class="col-span-1 my-1 mr-1">
-                    <select id="category" class="select">
-                      <!-- categories will be automatically populated by js -->
-                      <option disabled selected>Category</option>
-                    </select>
-                  </div>
-                  <div class="col-span-1 my-1 mr-1 flex">
-                    <button class="btn grow">Add</button>
-                  </div>
+                <form id="expenseForm" class="flex flex-row mb-1">
+                  <label class="input">
+                    <span class="label">Date</span>
+                    <input id="date" type="date" />
+                  </label>
+                  <input type="text" id="description" placeholder="pasta" class="input"/>
+                  <input type="number" id="amount" placeholder="980" required class="input"/>
+                  <select id="category" class="select">
+                    <!-- categories will be automatically populated by js -->
+                    <option disabled selected>Category</option>
+                  </select>
+                  <button class="btn">ADD</button>
                 </form>
 
                 <!-- table of expense  data -->
-                <div class="overflow-x-auto col-span-1 mb-1">
+                <div class="overflow-x-auto grow mb-1">
                   <table id="expenseTable" class="table table-zebra">
                     <!-- head (will be replaced by js) -->
                     <thead>
@@ -80,54 +88,46 @@
                 </div>
 
               </div>
+              
+              <div class="divider sm:divider-horizontal"></div>
 
               <!-- charts -->
-              <div class="grid md:grid-cols-2 grid-cols-1 col-span-1">
+              <div class="flex flex-col md:max-w-md">
+                
+                <div class="stats bg-base-100 border-base-300 border shadow-sm">
+                  <div class="stat">
+                    <div class="stat-title">Account balance</div>
+                    <div class="stat-value">$89,400</div>
+                    <div class="stat-actions">
+                      <button class="btn btn-xs btn-success">Add funds</button>
+                    </div>
+                  </div>
 
-                <div class="col-span-1 card bg-base-100 shadow-sm m-1">
-                  <div class="card-body">
-                    <canvas id="monthlyBreakdownChartCategories" class="w-max h-max"></canvas>
+                  <div class="stat">
+                    <div class="stat-title">Current balance</div>
+                    <div class="stat-value">$89,400</div>
+                    <div class="stat-actions">
+                      <button class="btn btn-xs">Withdrawal</button>
+                      <button class="btn btn-xs">Deposit</button>
+                    </div>
                   </div>
                 </div>
 
-                <div class="col-span-1 card bg-base-100 shadow-sm m-1">
-                  <div class="card-body">
-                    <canvas id="monthlyBreakdownChartOverview" class="w-max h-max"></canvas>
-                  </div>
-                </div>
-
+                <canvas id="monthlyBreakdownChartCategories" class="m-1"></canvas>
+                <canvas id="monthlyBreakdownChartOverview" class="m-1"></canvas>
               </div>
 
             </div>
           </div>
         </div>
 
-        <!-- ============ -->
-        <!-- SUMMARY PAGE -->
-        <!-- ============ -->
-        <div id="summary" class="hidden target:block grow">
+        <!-- ============= -->
+        <!-- SETTINGS PAGE -->
+        <!-- ============= -->
+        <div id="settings" class="hidden target:block grow">
           <div class="content-container">
 
-            <div class="stats bg-base-100 border-base-300 border shadow-sm">
-              <div class="stat">
-                <div class="stat-title">Account balance</div>
-                <div class="stat-value">$89,400</div>
-                <div class="stat-actions">
-                  <button class="btn btn-xs btn-success">Add funds</button>
-                </div>
-              </div>
-
-              <div class="stat">
-                <div class="stat-title">Current balance</div>
-                <div class="stat-value">$89,400</div>
-                <div class="stat-actions">
-                  <button class="btn btn-xs">Withdrawal</button>
-                  <button class="btn btn-xs">Deposit</button>
-                </div>
-              </div>
-            </div>
-
-            some cool charts will be here
+            settings page
 
           </div>
         </div>
@@ -144,12 +144,12 @@
 
       </div>  
     </div>
-    <div class="drawer-side">
+    <div class="drawer-side z-11">
       <label for="sidebar-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
       <ul class="menu bg-base-200 min-h-full w-80 p-4">
         <!-- Sidebar content here -->
-        <li><a href="#main">Main</a></li>
-        <li><a href="#summary">Annual Summary</a></li>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#settings">SETTINGS</a></li>
       </ul>
     </div>
   </div>

@@ -9,8 +9,11 @@ var data = {
 
 function hashChangeHandler() {
   if (!window.location.hash) {
-    window.location.hash = "#main"
+    window.location.hash = "#home"
   }
+
+  const sidebar = document.getElementById("sidebar-drawer");
+  sidebar.checked = false;
 }
 
 window.addEventListener('hashchange', () => {
@@ -21,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
   hashChangeHandler();
   loadData();
   resetCalendar();
+  populateMonthSelector();
 });
 
 function resetCalendar() {
@@ -32,6 +36,16 @@ function resetCalendar() {
   ].join('-');
 
   document.getElementById('date').value = localDate;
+}
+
+function populateMonthSelector() {
+  const select = document.getElementById('pageMonthSelector');
+  for (let i=1; i <=12; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i;
+    select.appendChild(option);
+  }
 }
 
 function populateCategories() {
@@ -95,7 +109,7 @@ function updateTable() {
   // last row showing remaining balance
   tbody.innerHTML += `
     <tr class="bg-accent">
-      <td>Remaining</td>
+      <td class="text-accent-content">Remaining</td>
       <td></td>
       <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
       <td></td>
@@ -127,6 +141,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
 
   // Reset form and reload
   e.target.reset();
+  resetCalendar();
   loadData();
 });
 
