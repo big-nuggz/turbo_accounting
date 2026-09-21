@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="corporate">
+<!-- <html lang="en" data-theme="cupcake"> -->
+<html lang="en" data-theme="">
 <head>
   <meta charset="UTF-8">
   <title>Turbo Accounting</title>
@@ -15,10 +16,15 @@
       <!-- content area -->
       <div class="bg-base-200 min-h-screen flex flex-col">
 
-        <!-- menu button -->
-        <label for="sidebar-drawer" class="drawer-button m-2">
-          <i class="bi bi-list"></i>
-        </label>
+        <!-- header  -->
+        <header class="bg-primary border-b-2 border-peimary-content mb-2">
+          <!-- menu button -->
+          <label for="sidebar-drawer" class="drawer-button m-2 absolute">
+            <i class="bi bi-list text-3xl text-primary-content"></i>
+          </label>
+
+          <p class="text-primary-content text-3xl font-bold m-2 text-center">TURBO ACCOUNTING</p>
+        </header>
 
         <!-- ============= -->
         <!-- THE MAIN PAGE -->
@@ -30,10 +36,10 @@
             <div class="grid md:grid-cols-2 grid-cols-1">
 
               <!-- input form & table -->
-              <div class="card col-span-1 bg-base-100 shadow-sm h-auto m-1 p-1">
+              <div class="card col-span-1 bg-base-100 shadow-sm h-auto m-1">
 
                 <!-- form -->
-                <form id="expenseForm" class="grid grid-cols-6">
+                <form id="expenseForm" class="grid grid-cols-6 mb-1">
                   <div class="col-span-2 m-1">
                     <label class="input">
                       <span class="label">Date</span>
@@ -41,26 +47,24 @@
                     </label>
                   </div>
                   <div class="col-span-1 my-1 mr-1">
-                    <input type="text" id="description" placeholder="pasta" required class="input"/>
+                    <input type="text" id="description" placeholder="pasta" class="input"/>
                   </div>
                   <div class="col-span-1 my-1 mr-1">
                     <input type="number" id="amount" placeholder="980" required class="input"/>
                   </div>
                   <div class="col-span-1 my-1 mr-1">
                     <select id="category" class="select">
+                      <!-- categories will be automatically populated by js -->
                       <option disabled selected>Category</option>
-                      <option>food</option>
-                      <option>medical</option>
-                      <option>investment</option>
                     </select>
                   </div>
-                  <div class="col-span-1 my-1 mr-1">
-                    <button class="btn">Add</button>
+                  <div class="col-span-1 my-1 mr-1 flex">
+                    <button class="btn grow">Add</button>
                   </div>
                 </form>
 
                 <!-- table of expense  data -->
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto col-span-1 mb-1">
                   <table id="expenseTable" class="table table-zebra">
                     <!-- head (will be replaced by js) -->
                     <thead>
@@ -103,7 +107,28 @@
         <!-- ============ -->
         <div id="summary" class="hidden target:block grow">
           <div class="content-container">
+
+            <div class="stats bg-base-100 border-base-300 border shadow-sm">
+              <div class="stat">
+                <div class="stat-title">Account balance</div>
+                <div class="stat-value">$89,400</div>
+                <div class="stat-actions">
+                  <button class="btn btn-xs btn-success">Add funds</button>
+                </div>
+              </div>
+
+              <div class="stat">
+                <div class="stat-title">Current balance</div>
+                <div class="stat-value">$89,400</div>
+                <div class="stat-actions">
+                  <button class="btn btn-xs">Withdrawal</button>
+                  <button class="btn btn-xs">Deposit</button>
+                </div>
+              </div>
+            </div>
+
             some cool charts will be here
+
           </div>
         </div>
 

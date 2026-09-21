@@ -34,6 +34,14 @@ function resetCalendar() {
   document.getElementById('date').value = localDate;
 }
 
+function populateCategories() {
+  const selector = document.getElementById("category");
+  selector.innerHTML = `<option disabled selected>Category</option>`;
+  selector.innerHTML += data.categories.map(item => `
+    <option>${item}</option>
+  `).join('');
+}
+
 async function loadData() {
   const response = await fetch('/api/budget');
 
@@ -43,6 +51,7 @@ async function loadData() {
 
   cleanDates();
   updateTable();
+  populateCategories();
 }
 
 function cleanDates() {
@@ -54,6 +63,8 @@ function cleanDates() {
 }
 
 function updateTable() {
+  const numberFormatter = new Intl.NumberFormat();
+
   const table = document.getElementById('expenseTable');
   table.innerHTML = '';
  
@@ -67,15 +78,28 @@ function updateTable() {
     </tr>`;
   table.appendChild(thead);
 
+  const remaining = data.data.reduce((sum, item) => {
+    return item.category === "income" ? sum + item.amount : sum - item.amount;
+  }, 0);
+
   const tbody = document.createElement('tbody');
   tbody.innerHTML = data.data.map(item => `
     <tr>
       <td>${item.date}</td>
       <td>${item.description}</td>
-      <td class="text-right">${item.amount}</td>
+      <td class="text-right">${numberFormatter.format(item.amount)}</td>
       <td>${item.category}</td>
     </tr>
   `).join('');
+
+  // last row showing remaining balance
+  tbody.innerHTML += `
+    <tr class="bg-accent">
+      <td>Remaining</td>
+      <td></td>
+      <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
+      <td></td>
+    </tr>`;
   table.appendChild(tbody);
 }
 
