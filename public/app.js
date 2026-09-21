@@ -1,7 +1,14 @@
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 
+// core categories are not editable by user
+const coreCategory = [
+  'other', 
+  'income', 
+  'investment'
+];
+
 var data = {
-  categories: ['income', 'other', 'food', 'medical'], 
+  categories: ['food', 'medical'], 
   subscriptions: {
     monthly: [], 
     annual: []
@@ -63,8 +70,9 @@ function populateMonthSelector() {
 
 function populateCategories() {
   const selector = document.getElementById("category");
-  selector.innerHTML = `<option disabled selected>Category</option>`;
-  selector.innerHTML += data.categories.map(item => `
+  const categories = [...coreCategory, ...data.categories];
+
+  selector.innerHTML = categories.map(item => `
     <option>${item}</option>
   `).join('');
 }

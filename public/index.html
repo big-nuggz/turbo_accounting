@@ -64,25 +64,14 @@
                   </label>
                   <input type="text" id="description" placeholder="pasta" class="input"/>
                   <input type="number" id="amount" placeholder="980" required class="input"/>
-                  <select id="category" class="select">
-                    <!-- categories will be automatically populated by js -->
-                    <option disabled selected>Category</option>
-                  </select>
+                  <select id="category" class="select"></select>                  
                   <button class="btn">ADD</button>
                 </form>
 
                 <!-- table of expense  data -->
                 <div class="overflow-x-auto grow mb-1">
                   <table id="expenseTable" class="table table-zebra">
-                    <!-- head (will be replaced by js) -->
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Category</th>
-                      </tr>
-                    </thead>
+                    <thead></thead>
                     <tbody></tbody>
                   </table>
                 </div>
@@ -112,7 +101,9 @@
                   </div>
                 </div>
 
+                <p class="text-center text-xl m-1">Spending Breakdown</p>
                 <canvas id="monthlyBreakdownChartCategories" class="m-1"></canvas>
+                <p class="text-center text-xl m-1">Budget Overview</p>
                 <canvas id="monthlyBreakdownChartOverview" class="m-1"></canvas>
               </div>
 

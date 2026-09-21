@@ -40,6 +40,10 @@ export function renderMonthlyBreakdownOverview(data) {
     if (category === "income") {
       total["savings"] = (total["savings"] || 0) + amount;
     }
+    else if (category === "investment") {
+      total["savings"] = (total["savings"] || 0) - amount;
+      total["investment"] = (total["investment"] || 0) + amount;
+    }
     else {
       total["savings"] = (total["savings"] || 0) - amount;
       total["spendings"] = (total["spendings"] || 0) + amount;
