@@ -9,6 +9,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --spacing: 0.25rem;
+    --container-sm: 24rem;
     --container-md: 28rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
@@ -3267,6 +3268,15 @@
   .flex-wrap {
     flex-wrap: wrap;
   }
+  .gap-x-1 {
+    column-gap: var(--spacing);
+  }
+  .gap-x-2 {
+    column-gap: calc(var(--spacing) * 2);
+  }
+  .gap-x-4 {
+    column-gap: calc(var(--spacing) * 4);
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -3510,6 +3520,9 @@
     }
     .md\:max-w-md {
       max-width: var(--container-md);
+    }
+    .md\:max-w-sm {
+      max-width: var(--container-sm);
     }
     .md\:max-w-xl {
       max-width: var(--container-xl);

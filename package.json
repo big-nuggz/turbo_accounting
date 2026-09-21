@@ -2,6 +2,7 @@
   "name": "turbo_accounting",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "build:css": "npx tailwindcss -i ./src/input.css -o ./public/style.css --watch",
     "dev:server": "node --env-file=.env server.js --watch",

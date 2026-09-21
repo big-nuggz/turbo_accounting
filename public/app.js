@@ -1,3 +1,5 @@
+import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
+
 var data = {
   categories: ['income', 'other', 'food', 'medical'], 
   subscriptions: {
@@ -25,6 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
   loadData();
   resetCalendar();
   populateMonthSelector();
+  populateYearSelector();
 });
 
 function resetCalendar() {
@@ -36,6 +39,16 @@ function resetCalendar() {
   ].join('-');
 
   document.getElementById('date').value = localDate;
+}
+
+function populateYearSelector() {
+  const select = document.getElementById('pageYearSelector');
+  for (let i=1990; i <=2030; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i;
+    select.appendChild(option);
+  }
 }
 
 function populateMonthSelector() {
@@ -62,6 +75,9 @@ async function loadData() {
   if (response.ok) {
     data = await response.json();
   }
+
+  renderMonthlyBreakdownCategories(data.data);
+  renderMonthlyBreakdownOverview(data.data);
 
   cleanDates();
   updateTable();

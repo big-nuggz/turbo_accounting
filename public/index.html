@@ -31,33 +31,33 @@
         <div id="home" class="hidden target:block grow">
           <div class="content-container">
 
-            <!-- page month selector -->
-            <div>
-              <button id="buttonLastMonth" class="btn"><i class="bi bi-arrow-left"></i></button>
-              <label class="select w-auto">
-                <span class="label">Year</span>
-                <select id="pageYearSelector">
-                </select>
-              </label>
-              <label class="select w-auto">
-                <span class="label">Month</span>
-                <select id="pageMonthSelector">
-                </select>
-              </label>
-              <button id="buttonGoToMonth" class="btn">GO</button>
-              <button id="buttonNextMonth" class="btn"><i class="bi bi-arrow-right"></i></button>
-            </div>
-
-            <div class="divider"></div>
-
             <!-- layout grid -->
             <div class="flex flex-col md:flex-row">
 
               <!-- input form & table -->
               <div class="bg-base-100 h-auto m-1 grow">
 
+                <!-- page month selector -->
+                <div>
+                  <button id="buttonLastMonth" class="btn"><i class="bi bi-arrow-left"></i></button>
+                  <label class="select w-auto">
+                    <span class="label">Year</span>
+                    <select id="pageYearSelector">
+                    </select>
+                  </label>
+                  <label class="select w-auto">
+                    <span class="label">Month</span>
+                    <select id="pageMonthSelector">
+                    </select>
+                  </label>
+                  <button id="buttonGoToMonth" class="btn">GO</button>
+                  <button id="buttonNextMonth" class="btn"><i class="bi bi-arrow-right"></i></button>
+                </div>
+
+                <div class="divider"></div>
+
                 <!-- form -->
-                <form id="expenseForm" class="flex flex-row mb-1">
+                <form id="expenseForm" class="flex flex-row gap-x-1 mb-1">
                   <label class="input">
                     <span class="label">Date</span>
                     <input id="date" type="date" />
@@ -94,22 +94,21 @@
               <!-- charts -->
               <div class="flex flex-col md:max-w-md">
                 
+                <!-- stats -->
                 <div class="stats bg-base-100 border-base-300 border shadow-sm">
                   <div class="stat">
-                    <div class="stat-title">Account balance</div>
-                    <div class="stat-value">$89,400</div>
-                    <div class="stat-actions">
-                      <button class="btn btn-xs btn-success">Add funds</button>
-                    </div>
+                    <div class="stat-title">Total Income</div>
+                    <div class="stat-value">$3,200</div>
                   </div>
 
                   <div class="stat">
-                    <div class="stat-title">Current balance</div>
-                    <div class="stat-value">$89,400</div>
-                    <div class="stat-actions">
-                      <button class="btn btn-xs">Withdrawal</button>
-                      <button class="btn btn-xs">Deposit</button>
-                    </div>
+                    <div class="stat-title">Spent</div>
+                    <div class="stat-value">$2,800</div>
+                  </div>
+
+                  <div class="stat">
+                    <div class="stat-title">Remaining</div>
+                    <div class="stat-value">$400</div>
                   </div>
                 </div>
 
@@ -154,7 +153,6 @@
     </div>
   </div>
   
-  <script src="monthlyChart.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
