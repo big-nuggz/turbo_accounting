@@ -1,4 +1,5 @@
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
+import { getRemainingBalance, updateMonthlyStats } from "./monthlyStats.js";
 
 // core categories are not editable by user
 const coreCategory = [
@@ -87,6 +88,8 @@ async function loadData() {
   renderMonthlyBreakdownCategories(data.data);
   renderMonthlyBreakdownOverview(data.data);
 
+  updateMonthlyStats(data.data);
+
   cleanDates();
   updateTable();
   populateCategories();
@@ -116,9 +119,7 @@ function updateTable() {
     </tr>`;
   table.appendChild(thead);
 
-  const remaining = data.data.reduce((sum, item) => {
-    return item.category === "income" ? sum + item.amount : sum - item.amount;
-  }, 0);
+  const remaining = getRemainingBalance(data.data)
 
   const tbody = document.createElement('tbody');
   tbody.innerHTML = data.data.map(item => `
@@ -150,7 +151,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   const category = document.getElementById('category').value;
 
   // 2. Append new item
-  data.data.push({ id: Date.now(), description, amount, category, date });
+  data.data.push({ description, amount, category, date });
 
   // 3. Save back to server
   const response = await fetch('/api/budget', {

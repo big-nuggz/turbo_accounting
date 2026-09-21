@@ -63,7 +63,7 @@
                     <input id="date" type="date" />
                   </label>
                   <input type="text" id="description" placeholder="pasta" class="input"/>
-                  <input type="number" id="amount" placeholder="980" required class="input"/>
+                  <input type="number" id="amount" placeholder="980.00" required class="input"/>
                   <select id="category" class="select"></select>                  
                   <button class="btn">ADD</button>
                 </form>
@@ -87,17 +87,17 @@
                 <div class="stats bg-base-100 border-base-300 border shadow-sm">
                   <div class="stat">
                     <div class="stat-title">Total Income</div>
-                    <div class="stat-value">$3,200</div>
+                    <div id="statIncome" class="stat-value">0</div>
                   </div>
 
                   <div class="stat">
                     <div class="stat-title">Spent</div>
-                    <div class="stat-value">$2,800</div>
+                    <div id="statSpent" class="stat-value">0</div>
                   </div>
 
                   <div class="stat">
                     <div class="stat-title">Remaining</div>
-                    <div class="stat-value">$400</div>
+                    <div id="statRemaining" class="stat-value">0</div>
                   </div>
                 </div>
 
