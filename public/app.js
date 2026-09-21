@@ -1,5 +1,6 @@
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 import { getRemainingBalance, updateMonthlyStats } from "./monthlyStats.js";
+import { populateThemes } from "./themes.js";
 
 // core categories are not editable by user
 const coreCategory = [
@@ -36,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
   resetCalendar();
   populateMonthSelector();
   populateYearSelector();
+  populateThemes();
 });
 
 function resetCalendar() {

@@ -17,12 +17,20 @@
 
         <!-- header  -->
         <header class="bg-base-100 mb-6 border-b-2 border-base-300 sticky top-0 z-10">
+          
           <!-- menu button -->
           <label for="sidebar-drawer" class="drawer-button m-2 absolute">
             <i class="bi bi-list text-3xl"></i>
           </label>
 
           <p class="text-3xl m-2 text-center">TURBO ACCOUNTING</p>
+
+          <!-- theme selector -->
+          <div class="dropdown dropdown-end absolute right-0 top-0 m-2">
+            <div tabindex="0" role="button" class="btn btn-ghost rounded-full"><i class="bi bi-palette"></i></div>
+            <ul id="themeList" tabindex="-1" class="dropdown-content bg-base-300 rounded-box z-1 p-2 shadow-2xl max-h-96 overflow-y-auto"></ul>
+          </div>
+
         </header>
 
         <!-- ============= -->
@@ -35,7 +43,7 @@
             <div class="flex flex-col md:flex-row">
 
               <!-- input form & table -->
-              <div class="bg-base-100 h-auto m-1 grow">
+              <div class="bg-base-100 h-auto m-1 md:max-w-2xl">
 
                 <!-- page month selector -->
                 <div>
@@ -81,7 +89,7 @@
               <div class="divider sm:divider-horizontal"></div>
 
               <!-- charts -->
-              <div class="flex flex-col md:max-w-md">
+              <div class="flex flex-col grow">
                 
                 <!-- stats -->
                 <div class="stats bg-base-100 border-base-300 border shadow-sm">
@@ -101,10 +109,20 @@
                   </div>
                 </div>
 
-                <p class="text-center text-xl m-1">Spending Breakdown</p>
-                <canvas id="monthlyBreakdownChartCategories" class="m-1"></canvas>
-                <p class="text-center text-xl m-1">Budget Overview</p>
-                <canvas id="monthlyBreakdownChartOverview" class="m-1"></canvas>
+                <div class="divider"></div>
+
+                <div class="flex md:flex-row flex-col">
+                  <div>
+                    <p class="text-center text-xl m-1">Spending Breakdown</p>
+                    <canvas id="monthlyBreakdownChartCategories" class="m-1"></canvas>
+                  </div>
+                  
+                  <div>
+                    <p class="text-center text-xl m-1">Budget Overview</p>
+                    <canvas id="monthlyBreakdownChartOverview" class="m-1"></canvas>
+                  </div>
+                </div>
+
               </div>
 
             </div>
@@ -126,7 +144,7 @@
         <footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
           <aside>
             <p>
-              Made by Mika Novakovic
+              Made with <i class="bi bi-heart-fill text-xs"></i> by Mika Novakovic
               <a href="https://github.com/big-nuggz"><i class="bi bi-github"></i></a>
             </p>
           </aside>
