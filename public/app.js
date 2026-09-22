@@ -6,6 +6,7 @@ import { showAlert, escapeHtml } from "./utils.js";
 import { updateTable } from "./expenseTable.js";
 import { updateMonthlyStats } from "./monthlyStats.js";
 import { getSelectedYearAndMonth, initializeMonthNavigator } from "./monthNavigator.js";
+import { setCurrencyInput } from "./currencyForm.js";
 
 
 function hashChangeHandler() {
@@ -44,12 +45,15 @@ export async function reloadAll() {
 
   const yearAndMonth = getSelectedYearAndMonth();
   const data = await getData(yearAndMonth.year, yearAndMonth.month);
+  const profile = getProfile();
 
   updateMonthlyStats(data);
   renderMonthlyBreakdownCategories(data);
   renderMonthlyBreakdownOverview(data);
 
   updateTable(data);
+
+  setCurrencyInput(profile.currency);
 
   updateCategoryList();
   populateCategories();

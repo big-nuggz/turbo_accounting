@@ -56,9 +56,9 @@ export function getProfile() {
   return profile;
 }
 
-export function updateProfile(updatedProfile) {
+export async function updateProfile(updatedProfile) {
   profile = updatedProfile;
-  saveProfile();
+  await saveProfile();
 }
 
 export function getCategories() {
