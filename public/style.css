@@ -9,6 +9,8 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --spacing: 0.25rem;
+    --container-sm: 24rem;
+    --container-md: 28rem;
     --container-2xl: 42rem;
     --container-7xl: 80rem;
     --text-xs: 0.75rem;
@@ -3011,6 +3013,9 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .table {
     display: table;
   }
@@ -3052,6 +3057,12 @@
   .w-full {
     width: 100%;
   }
+  .max-w-md {
+    max-width: var(--container-md);
+  }
+  .max-w-sm {
+    max-width: var(--container-sm);
+  }
   .flex-shrink {
     flex-shrink: 1;
   }
@@ -3060,6 +3071,9 @@
   }
   .grow {
     flex-grow: 1;
+  }
+  .table-fixed {
+    table-layout: fixed;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -3201,6 +3215,11 @@
   }
   .gap-x-1 {
     column-gap: var(--spacing);
+  }
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .overflow-x-auto {
     overflow-x: auto;
@@ -3367,6 +3386,14 @@
   }
   .target\:block:target {
     display: block;
+  }
+  @media (hover: hover) {
+    .hover\:overflow-visible:hover {
+      overflow: visible;
+    }
+    .hover\:whitespace-normal:hover {
+      white-space: normal;
+    }
   }
   @media (width >= 40rem) {
     @layer daisyui.l1.l2 {
