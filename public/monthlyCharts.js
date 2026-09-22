@@ -52,6 +52,9 @@ export function renderMonthlyBreakdownOverview(data) {
     return total;
   }, {});
 
+  if (totals["savings"] < 0)
+    totals["savings"] = 0;
+
   const totalsSorted = Object.entries(totals)
     .map(([category, amount]) => ({category, amount}))
     .sort((a, b) => b.amount - a.amount);

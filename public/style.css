@@ -3465,6 +3465,9 @@
   .bg-blue-600 {
     background-color: var(--color-blue-600);
   }
+  .bg-error {
+    background-color: var(--color-error);
+  }
   .bg-indigo-600 {
     background-color: var(--color-indigo-600);
   }
@@ -3558,6 +3561,9 @@
   }
   .text-base-content {
     color: var(--color-base-content);
+  }
+  .text-error {
+    color: var(--color-error);
   }
   .text-gray-700 {
     color: var(--color-gray-700);

@@ -23,5 +23,8 @@ export function updateMonthlyStats(data) {
 
   document.getElementById("statIncome").innerHTML = `${numberFormatter.format(income)}`;
   document.getElementById("statSpent").innerHTML = `${numberFormatter.format(spent)}`;
-  document.getElementById("statRemaining").innerHTML = `${numberFormatter.format(remaining)}`;
+  if (remaining >= 0)
+    document.getElementById("statRemaining").innerHTML = `${numberFormatter.format(remaining)}`;
+  else
+    document.getElementById("statRemaining").innerHTML = `<span class="text-error">${numberFormatter.format(remaining)}</span>`;
 }
