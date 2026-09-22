@@ -1,5 +1,7 @@
 # Turbo Accounting
 
+![creenshot](screenshot.png)
+
 This is a modern port/upgrade of my old accounting app I've developed in PHP many years ago. It's used to track your monthly spending.
 
 ## Setup
