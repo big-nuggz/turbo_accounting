@@ -30,7 +30,8 @@ export function renderMonthlyBreakdownCategories(data) {
     data: {
       datasets: [{
         data: totalsSorted.map(item => item.amount), 
-        backgroundColor: colors
+        backgroundColor: colors, 
+        borderColor: "rgba(0.0,0.0,0.0,0.0)"
       }], 
       labels: totalsSorted.map(item => item.category)
     }
@@ -86,7 +87,8 @@ export function renderMonthlyBreakdownOverview(data) {
     data: {
       datasets: [{
         data: totalsSorted.map(item => item.amount), 
-        backgroundColor: colors
+        backgroundColor: colors,
+        borderColor: "rgba(0.0,0.0,0.0,0.0)"
       }], 
       labels: totalsSorted.map(item => item.category)
     }
