@@ -1,4 +1,4 @@
-import { getCategories } from "./app.js";
+import { getCategories } from "./data.js";
 
 export function renderMonthlyBreakdownCategories(data) {
   const ctx = document.getElementById('monthlyBreakdownChartCategories');

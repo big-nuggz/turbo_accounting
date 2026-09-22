@@ -1,28 +1,10 @@
 import { updateCategoryList } from "./categoryList.js";
+import { getCategories, getData, updateData } from "./data.js";
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
-import { getRemainingBalance, updateMonthlyStats } from "./monthlyStats.js";
 import { populateThemes } from "./themes.js";
 import { escapeHtml } from "./utils.js";
+import { updateTable } from "./expenseTable.js";
 
-// core categories are not editable by user
-const coreCategories = [
-  {name: 'other', color: "#FF6080"}, 
-  {name: 'income', color: "#359DE7"}, 
-  {name: 'investment', color: "#FF9F47"}, 
-  {name: 'subscription', color: "#985AFA"}, 
-];
-
-var data = {
-  categories: [
-    {name: 'food', color: "#FFCE5E"}, 
-    {name: 'medical', color: "#EBA3B5"}
-  ], 
-  subscriptions: {
-    monthly: [], 
-    annual: []
-  }, 
-  data: []
-};
 
 function hashChangeHandler() {
   if (!window.location.hash) {
@@ -46,6 +28,34 @@ window.addEventListener('DOMContentLoaded', () => {
   populateYearSelector();
   populateThemes();
 });
+
+export async function loadData() {
+  const response = await fetch('/api/budget');
+
+  var data = getData();
+
+  if (response.ok) {
+    data = await response.json();
+    updateData(data);
+  }
+
+  renderMonthlyBreakdownCategories(data.data);
+  renderMonthlyBreakdownOverview(data.data);
+
+  updateCategoryList(data.categories);
+
+  cleanDates();
+  updateTable();
+  populateCategories();
+}
+
+function cleanDates() {
+  var data = getData();
+  data.data.map(item => {
+    item.date = new Date(item.date).toISOString().split('T')[0];
+  });
+  updateData(data);
+}
 
 function resetCalendar() {
   const today = new Date();
@@ -79,6 +89,9 @@ function populateMonthSelector() {
 }
 
 function populateCategories() {
+  const data = getData();
+  const coreCategories = getCategories().core;
+
   const selector = document.getElementById("category");
   const categories = [...coreCategories, ...data.categories];
 
@@ -87,81 +100,10 @@ function populateCategories() {
   `).join('');
 }
 
-async function loadData() {
-  const response = await fetch('/api/budget');
-
-  if (response.ok) {
-    data = await response.json();
-  }
-
-  renderMonthlyBreakdownCategories(data.data);
-  renderMonthlyBreakdownOverview(data.data);
-
-  updateMonthlyStats(data.data);
-
-  updateCategoryList(data.categories);
-
-  cleanDates();
-  updateTable();
-  populateCategories();
-}
-
-function cleanDates() {
-  data.data.map(item => {
-    item.date = new Date(item.date).toISOString().split('T')[0];
-  });
-
-  return data;
-}
-
-function updateTable() {
-  const numberFormatter = new Intl.NumberFormat();
-
-  const table = document.getElementById('expenseTable');
-  table.innerHTML = '';
- 
-  const thead = document.createElement('thead');
-  thead.innerHTML = `
-    <tr>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Amount</th>
-      <th>Category</th>
-    </tr>`;
-  table.appendChild(thead);
-
-  const remaining = getRemainingBalance(data.data)
-
-  const tbody = document.createElement('tbody');
-  tbody.innerHTML = data.data.map(item => {
-    const category = [...coreCategories, ...data.categories].find((category) => category.name === item.category);
-
-    const name = category !== undefined ? category.name : item.category;
-    const color = category !== undefined ? category.color : '#FFF';
-
-    return `
-      <tr>
-        <td>${item.date}</td>
-        <td class="truncate" title="${item.description}">${item.description}</td>
-        <td class="text-right">${numberFormatter.format(item.amount)}</td>
-        <td class="flex flex-row items-center"><div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>${name}</td>
-      </tr>
-    `
-  }).join('');
-
-  // last row showing remaining balance
-  tbody.innerHTML += `
-    <tr class="bg-accent">
-      <td class="text-accent-content">Remaining</td>
-      <td></td>
-      <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
-      <td></td>
-    </tr>`;
-  table.appendChild(tbody);
-}
-
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  var data = getData();
   
   const date = document.getElementById('date').value;
   const description = escapeHtml(document.getElementById('description').value);
@@ -169,7 +111,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   const category = document.getElementById('category').value;
 
   data.data.push({ description, amount, category, date });
-  saveData();
+  updateData(data);
 
   // Reset form and reload
   e.target.reset();
@@ -177,24 +119,3 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   loadData();
 });
 
-async function saveData() {
-  const response = await fetch('/api/budget', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-
-  if (!response.ok) {
-    console.error(response.error)
-  }
-}
-
-export function getCategories() {
-  return {core: coreCategories, user: data.categories};
-}
-
-export function updateUserCategories(categories) {
-  data.categories = categories;
-  saveData();
-  loadData();
-}

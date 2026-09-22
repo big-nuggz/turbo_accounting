@@ -1,4 +1,5 @@
-import { getCategories, updateUserCategories } from "./app.js";
+import { loadData } from "./app.js";
+import { getCategories, updateUserCategories } from "./data.js";
 import { escapeHtml } from "./utils.js";
 
 
@@ -122,4 +123,5 @@ function setCategoryColor(e, index) {
   var userCategories = getCategories().user;
   userCategories[index].color = e.target.value;
   updateUserCategories(userCategories);
+  loadData();
 }
