@@ -3,7 +3,7 @@ import { getCategories, getData, updateData } from "./data.js";
 import { getRemainingBalance } from "./monthlyStats.js";
 import { getSelectedYearAndMonth } from "./monthNavigator.js";
 
-export function updateTable(data) {
+export function updateTable(data, currency) {
   const categories = getCategories();
   const coreCategories = categories.core;
   const userCategories = categories.user;
@@ -39,7 +39,7 @@ export function updateTable(data) {
     row.innerHTML = `
     <td>${item.date}</td>
     <td class="truncate" title="${item.description}">${item.description}</td>
-    <td class="text-right">${numberFormatter.format(item.amount)}</td>
+    <td class="text-right">${currency}${numberFormatter.format(item.amount)}</td>
     <td class="flex flex-row items-center">
       <div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>
       ${name}
@@ -62,7 +62,7 @@ export function updateTable(data) {
   lastRow.innerHTML += `
     <td class="text-accent-content">Remaining</td>
     <td></td>
-    <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
+    <td class="text-right text-accent-content">${currency}${numberFormatter.format(remaining)}</td>
     <td></td>`;
   tbody.appendChild(lastRow);
   

@@ -47,11 +47,11 @@ export async function reloadAll() {
   const data = await getData(yearAndMonth.year, yearAndMonth.month);
   const profile = getProfile();
 
-  updateMonthlyStats(data);
+  updateMonthlyStats(data, profile.currency);
   renderMonthlyBreakdownCategories(data);
   renderMonthlyBreakdownOverview(data);
 
-  updateTable(data);
+  updateTable(data, profile.currency);
 
   setCurrencyInput(profile.currency);
 

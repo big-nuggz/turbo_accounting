@@ -1,5 +1,6 @@
 import { reloadAll } from "./app.js";
 import { getProfile, updateProfile } from "./data.js";
+import { escapeHtml } from "./utils.js";
 
 const currencyInput = document.getElementById('currencyInput');
 
@@ -13,7 +14,7 @@ document.getElementById('currencyForm').addEventListener('submit', async (e) => 
   const profile = getProfile();
   const currency = currencyInput.value;
 
-  profile.currency = currency;
+  profile.currency = escapeHtml(currency);
   await updateProfile(profile);
   reloadAll();
 });
