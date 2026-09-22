@@ -127,7 +127,7 @@ function updateTable() {
   tbody.innerHTML = data.data.map(item => `
     <tr>
       <td>${item.date}</td>
-      <td class="truncate">${item.description}</td>
+      <td class="truncate" title="${item.description}">${item.description}</td>
       <td class="text-right">${numberFormatter.format(item.amount)}</td>
       <td>${item.category}</td>
     </tr>
