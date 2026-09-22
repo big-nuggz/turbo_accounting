@@ -171,5 +171,3 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   resetCalendar();
   loadData();
 });
-
-loadData();

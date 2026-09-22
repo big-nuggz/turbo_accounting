@@ -12,6 +12,8 @@ export function populateThemes(){
   const themeList = document.getElementById("themeList");
   const currentTheme = loadTheme();
 
+  setTheme(currentTheme);
+
   themeList.innerHTML = availableThemes.map(item => `
     <li><button name="theme-dropdown" class="w-full btn btn-sm btn-block btn-ghost justify-start" value="${item}" />${item}${item === currentTheme? ' <i class="bi bi-check2"></i>' : ''}</button></li>
   `).join('');
@@ -23,12 +25,27 @@ export function populateThemes(){
 
 function loadTheme() {
   const theme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', theme)
   return theme;
 }
 
 function saveTheme() {
-  document.documentElement.setAttribute('data-theme', this.value)
   localStorage.setItem('theme', this.value);
   populateThemes();
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme)
+  updateChartColor(theme);
+}
+
+function updateChartColor() {
+  const currentForegroundColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-base-content")
+    .trim();
+
+  Chart.defaults.color = currentForegroundColor;
+
+  Object.values(Chart.instances).forEach(chart => {
+    chart.update();
+  });
 }
