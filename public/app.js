@@ -134,12 +134,16 @@ function updateTable() {
   const tbody = document.createElement('tbody');
   tbody.innerHTML = data.data.map(item => {
     const category = [...coreCategories, ...data.categories].find((category) => category.name === item.category);
+
+    const name = category !== undefined ? category.name : item.category;
+    const color = category !== undefined ? category.color : '#FFF';
+
     return `
       <tr>
         <td>${item.date}</td>
         <td class="truncate" title="${item.description}">${item.description}</td>
         <td class="text-right">${numberFormatter.format(item.amount)}</td>
-        <td class="flex flex-row items-center"><div style="background-color: ${category.color}" class="rounded-full border border-base-300 size-4 mr-1"></div>${category.name}</td>
+        <td class="flex flex-row items-center"><div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>${name}</td>
       </tr>
     `
   }).join('');
@@ -163,10 +167,16 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   const amount = parseFloat(document.getElementById('amount').value);
   const category = document.getElementById('category').value;
 
-  // 2. Append new item
   data.data.push({ description, amount, category, date });
+  saveData();
 
-  // 3. Save back to server
+  // Reset form and reload
+  e.target.reset();
+  resetCalendar();
+  loadData();
+});
+
+async function saveData() {
   const response = await fetch('/api/budget', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -176,9 +186,14 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   if (!response.ok) {
     console.error(response.error)
   }
+}
 
-  // Reset form and reload
-  e.target.reset();
-  resetCalendar();
+export function getCategories() {
+  return {core: coreCategories, user: data.categories};
+}
+
+export function updateUserCategories(categories) {
+  data.categories = categories;
+  saveData();
   loadData();
-});
+}

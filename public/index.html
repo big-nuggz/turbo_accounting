@@ -143,11 +143,31 @@
                   <input type="text" id="categoryEditInput" placeholder="grocery" class="input" required/>
                   <button type="submit" class="btn">ADD</button>
                 </form>
-                <ul id="categoryList" class="list"></ul>
+                <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
+                  <ul id="categoryList" class="list"></ul>
+                </div>
               </div>
             </div>
 
             <div class="divider"></div>
+
+            <!-- recurring payment editor -->
+            <div class="flex flex-col">
+              <h1 class="text-xl mb-2">Edit Recurring Payments</h1>
+              <div class="">
+                <form id="subscriptionListForm" class="flex flex-row gap-x-1 mb-1">
+                  <input type="text" id="subscriptionEditDescription" placeholder="netflix" class="input" required/>
+                  <input type="number" id="subscriptionEditAmount" placeholder="1280.0" class="input" required/>
+                  <select id="categorySubscription" class="select"></select>     
+                  <input type="radio" name="radio-1" class="radio" checked="checked" />
+                  <input type="radio" name="radio-1" class="radio" />
+                  <button type="submit" class="btn">ADD</button>
+                </form>
+                <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
+                  <ul id="subscriptionList" class="list"></ul>
+                </div>
+              </div>
+            </div>
 
           </div>
         </div>

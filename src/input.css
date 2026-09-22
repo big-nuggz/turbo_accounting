@@ -6,8 +6,15 @@
 
 @import "bootstrap-icons/font/bootstrap-icons";
 
+/* user defined classes */
 @layer components {
   .content-container {
     @apply max-w-7xl place-content-center mx-auto;
+  }
+
+  .color-picker {
+    @apply [&::-webkit-color-swatch-wrapper]:p-0 
+           [&::-webkit-color-swatch]:rounded-xl 
+           [&::-moz-color-swatch]:rounded-xl;
   }
 }
