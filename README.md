@@ -37,4 +37,16 @@ This project is developed in:
 
 ## Credits
 
-This project uses icons from [Bootstrap Icons](https://icons.getbootstrap.com/). Licensed under MIT license.
+This project uses icons from [Bootstrap Icons](https://icons.getbootstrap.com/).
+The UI was made with [Tailwind CSS](https://tailwindcss.com/) and [daisyUI](https://daisyui.com/).
+Charts were made with [Chart.js](https://github.com/chartjs/Chart.js).
+
+All licensed under MIT license.
+
+## Extra
+
+![old app screenshot](oldapp.png)
+
+This is what my old app looked like. Some parts are censored, because it's my real spending data for that month :p
+
+It was made in PHP, and I've used it from 2022 to 2026 with little change to the app. Functional, but desperately needed an upgrade.
