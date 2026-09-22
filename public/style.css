@@ -12,7 +12,6 @@
     --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-slate-400: oklch(70.4% 0.04 256.788);
     --color-slate-700: oklch(37.2% 0.044 257.287);
-    --color-black: #000;
     --spacing: 0.25rem;
     --container-xs: 20rem;
     --container-2xl: 42rem;
@@ -2279,39 +2278,6 @@
     margin-left: auto;
   }
   @layer daisyui.l1.l2.l3 {
-    .status {
-      display: inline-block;
-      aspect-ratio: 1 / 1;
-      width: calc(0.25rem * 2);
-      height: calc(0.25rem * 2);
-      border-radius: var(--radius-selector);
-      background-color: var(--color-base-content);
-    }
-    @supports (color: color-mix(in lab, red, red)) {
-      .status {
-        background-color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
-      }
-    }
-    .status {
-      background-position: center;
-      background-repeat: no-repeat;
-      vertical-align: middle;
-      color: color-mix(in srgb, #000 30%, transparent);
-    }
-    @supports (color: color-mix(in lab, red, red)) {
-      .status {
-        color: color-mix(in oklab, var(--color-black) 30%, transparent);
-      }
-    }
-    .status {
-      background-image: radial-gradient( circle at 35% 30%, oklch(1 0 0 / calc(var(--depth) * 0.5)), #0000 );
-      box-shadow: 0 2px 3px -1px currentColor;
-    }
-    @supports (color: color-mix(in lab, red, red)) {
-      .status {
-        box-shadow: 0 2px 3px -1px color-mix(in oklab, currentColor calc(var(--depth) * 100%), #0000);
-      }
-    }
     .footer {
       display: grid;
       width: 100%;
@@ -2442,6 +2408,9 @@
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
+  }
+  .w-40 {
+    width: calc(var(--spacing) * 40);
   }
   .w-80 {
     width: calc(var(--spacing) * 80);

@@ -46,11 +46,12 @@
               <div class="bg-base-100 h-auto m-1 md:max-w-2xl">
 
                 <!-- page month selector -->
-                <div>
+                <div class="flex flex-row gap-x-1">
                   <button id="buttonLastMonth" class="btn"><i class="bi bi-arrow-left"></i></button>
-                  <label class="select w-auto">
+
+                  <label class="input w-40">
                     <span class="label">Year</span>
-                    <select id="pageYearSelector">
+                    <input type='number' placeholder="2026" required id="pageYearSelector">
                     </select>
                   </label>
                   <label class="select w-auto">
@@ -58,7 +59,7 @@
                     <select id="pageMonthSelector">
                     </select>
                   </label>
-                  <button id="buttonGoToMonth" class="btn">GO</button>
+
                   <button id="buttonNextMonth" class="btn"><i class="bi bi-arrow-right"></i></button>
                 </div>
 

@@ -6,8 +6,8 @@ const coreCategories = [
   {name: 'subscription', color: "#985AFA"}, 
 ];
 
-// default data
-var data = {
+// default profile
+var profile = {
   categories: [
     {name: 'food', color: "#FFCE5E"}, 
     {name: 'medical', color: "#EBA3B5"}
@@ -16,25 +16,35 @@ var data = {
     monthly: [], 
     annual: []
   }, 
-  currency: "$", 
-  data: []
+  currency: "$"
 };
 
-export async function loadData() {
-  const response = await fetch('/api/budget');
+// available data
+var dataList = {}
+
+export async function fetchDataList() {
+  const response = await fetch('/api/listdata');
 
   if (response.ok) {
-    data = await response.json();
+    dataList = await response.json();
+  }
+}
+
+export async function fetchProfile() {
+  const response = await fetch('/api/profile');
+
+  if (response.ok) {
+    profile = await response.json();
   }
 
   return response.ok;
 }
 
-async function saveData() {
-  const response = await fetch('/api/budget', {
+async function saveProfile() {
+  const response = await fetch('/api/profile', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
+    body: JSON.stringify(profile)
   });
 
   if (!response.ok) {
@@ -42,20 +52,45 @@ async function saveData() {
   }
 }
 
-export function getData() {
-  return data;
+export function getProfile() {
+  return profile;
 }
 
-export function updateData(updatedData) {
-  data = updatedData;
-  saveData();
+export function updateProfile(updatedProfile) {
+  profile = updatedProfile;
+  saveProfile();
 }
 
 export function getCategories() {
-  return {core: coreCategories, user: data.categories};
+  return {core: coreCategories, user: profile.categories};
 }
 
 export function updateUserCategories(categories) {
-  data.categories = categories;
-  saveData();
+  profile.categories = categories;
+  saveProfile();
+}
+
+export function getDataList() {
+  return dataList
+}
+
+export async function getData(year, month) {
+  const response = await fetch(`/api/data?year=${year}&month=${month}`);
+
+  if (response.ok)
+    return await response.json();
+
+  return [];
+}
+
+export async function updateData(data, year, month) {
+  const response = await fetch(`/api/data?year=${year}&month=${month}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+
+  if (!response.ok) {
+    console.error(response.error)
+  };
 }

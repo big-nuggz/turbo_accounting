@@ -1,10 +1,12 @@
 import { reloadAll } from "./app.js";
 import { getCategories, getData, updateData } from "./data.js";
 import { getRemainingBalance } from "./monthlyStats.js";
+import { getSelectedYearAndMonth } from "./monthNavigator.js";
 
-export function updateTable() {
-  const coreCategories = getCategories().core;
-  const data = getData();
+export function updateTable(data) {
+  const categories = getCategories();
+  const coreCategories = categories.core;
+  const userCategories = categories.user;
 
   const numberFormatter = new Intl.NumberFormat();
 
@@ -21,15 +23,15 @@ export function updateTable() {
     </tr>`;
   table.appendChild(thead);
 
-  const remaining = getRemainingBalance(data.data)
+  const remaining = getRemainingBalance(data)
 
   const tbody = document.createElement('tbody');
 
-  data.data.forEach((item, index) => {
+  data.forEach((item, index) => {
     const row = document.createElement('tr');
     row.dataset.index = index;
 
-    const category = [...coreCategories, ...data.categories].find((category) => category.name === item.category);
+    const category = [...coreCategories, ...userCategories].find((category) => category.name === item.category);
 
     const name = category !== undefined ? category.name : item.category;
     const color = category !== undefined ? category.color : '#FFF';
@@ -67,13 +69,16 @@ export function updateTable() {
   table.appendChild(tbody);
 }
 
-function deleteItem(index) {
+async function deleteItem(index) {
   const userConfirmation = confirm("Are you sure?");
 
   if (userConfirmation) {
-    const data = getData();
-    data.data.splice(index, 1);
-    updateData(data);
+    const yearAndMonth = getSelectedYearAndMonth();
+    const data = await getData(yearAndMonth.year, yearAndMonth.month);
+
+    data.splice(index, 1);
+
+    await updateData(data, yearAndMonth.year, yearAndMonth.month);
     reloadAll();
   }
 }

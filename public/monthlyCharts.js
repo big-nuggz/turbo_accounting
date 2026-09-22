@@ -1,7 +1,6 @@
-import { getCategories, getData } from "./data.js";
+import { getCategories } from "./data.js";
 
-export function renderMonthlyBreakdownCategories() {
-  const data = getData().data;
+export function renderMonthlyBreakdownCategories(data) {
   const ctx = document.getElementById('monthlyBreakdownChartCategories');
 
   const existingChart = Chart.getChart(ctx);
@@ -39,8 +38,7 @@ export function renderMonthlyBreakdownCategories() {
   });
 }
 
-export function renderMonthlyBreakdownOverview() {
-  const data = getData().data;
+export function renderMonthlyBreakdownOverview(data) {
   const ctx = document.getElementById('monthlyBreakdownChartOverview');
   
   const existingChart = Chart.getChart(ctx);

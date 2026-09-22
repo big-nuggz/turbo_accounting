@@ -1,10 +1,11 @@
 import { updateCategoryList } from "./categoryList.js";
-import { getCategories, getData, loadData, updateData } from "./data.js";
+import { getCategories, getProfile, fetchDataList, fetchProfile, getData, updateData } from "./data.js";
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 import { populateThemes } from "./themes.js";
 import { showAlert, escapeHtml } from "./utils.js";
 import { updateTable } from "./expenseTable.js";
 import { updateMonthlyStats } from "./monthlyStats.js";
+import { getSelectedYearAndMonth, initializeMonthNavigator } from "./monthNavigator.js";
 
 
 function hashChangeHandler() {
@@ -21,35 +22,40 @@ window.addEventListener('hashchange', () => {
   reloadAll();
 });
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   hashChangeHandler();
+  initializeMonthNavigator();
   reloadAll();
-  resetCalendar();
-  populateMonthSelector();
-  populateYearSelector();
-  populateThemes();
 });
 
 // reloads everything
 export async function reloadAll() {
-  const loadSuccess = await loadData();
+  const loadSuccess = await fetchProfile();
   if (!loadSuccess) {
     showAlert('home', `
       <div role="alert" class="alert alert-error">
         <i class="bi bi-exclamation-triangle"></i>
-        <span>Data was not loaded.</span>
+        <span>Profile was not loaded.</span>
       </div>`, 
     5000);
   }
 
-  updateMonthlyStats();
-  renderMonthlyBreakdownCategories();
-  renderMonthlyBreakdownOverview();
+  await fetchDataList();
+
+  const yearAndMonth = getSelectedYearAndMonth();
+  const data = await getData(yearAndMonth.year, yearAndMonth.month);
+
+  updateMonthlyStats(data);
+  renderMonthlyBreakdownCategories(data);
+  renderMonthlyBreakdownOverview(data);
+
+  updateTable(data);
 
   updateCategoryList();
-
-  updateTable();
   populateCategories();
+
+  resetCalendar();
+  populateThemes();
 }
 
 function resetCalendar() {
@@ -63,32 +69,12 @@ function resetCalendar() {
   document.getElementById('date').value = localDate;
 }
 
-function populateYearSelector() {
-  const select = document.getElementById('pageYearSelector');
-  for (let i=1990; i <=2030; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = i;
-    select.appendChild(option);
-  }
-}
-
-function populateMonthSelector() {
-  const select = document.getElementById('pageMonthSelector');
-  for (let i=1; i <=12; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = i;
-    select.appendChild(option);
-  }
-}
-
 function populateCategories() {
-  const data = getData();
+  const profile = getProfile();
   const coreCategories = getCategories().core;
 
   const selector = document.getElementById("category");
-  const categories = [...coreCategories, ...data.categories];
+  const categories = [...coreCategories, ...profile.categories];
 
   selector.innerHTML = categories.map(category => `
     <option>${category.name}</option>
@@ -98,15 +84,16 @@ function populateCategories() {
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const data = getData();
+  const yearAndMonth = getSelectedYearAndMonth();
+  const data = await getData(yearAndMonth.year, yearAndMonth.month);
   
   const date = document.getElementById('date').value;
   const description = escapeHtml(document.getElementById('description').value);
   const amount = parseFloat(document.getElementById('amount').value);
   const category = document.getElementById('category').value;
 
-  data.data.push({ description, amount, category, date });
-  updateData(data);
+  data.push({ description, amount, category, date });
+  await updateData(data, yearAndMonth.year, yearAndMonth.month);
 
   // Reset form and reload
   e.target.reset();

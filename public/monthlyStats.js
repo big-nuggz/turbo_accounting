@@ -1,5 +1,3 @@
-import { getData } from "./data.js";
-
 export function getRemainingBalance(data) {
   const remaining = data.reduce((sum, item) => {
     return item.category === "income" ? sum + item.amount : sum - item.amount;
@@ -16,9 +14,7 @@ export function getTotalIncome(data) {
   return income;
 }
 
-export function updateMonthlyStats() {
-  const data = getData().data;
-  
+export function updateMonthlyStats(data) {
   const income = getTotalIncome(data);
   const remaining = getRemainingBalance(data);
   const spent = income - remaining;
