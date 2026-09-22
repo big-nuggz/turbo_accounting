@@ -1,17 +1,22 @@
+import { updateCategoryList } from "./categoryList.js";
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 import { getRemainingBalance, updateMonthlyStats } from "./monthlyStats.js";
 import { populateThemes } from "./themes.js";
 import { escapeHtml } from "./utils.js";
 
 // core categories are not editable by user
-const coreCategory = [
-  'other', 
-  'income', 
-  'investment'
+const coreCategories = [
+  {name: 'other', color: "#FF6080"}, 
+  {name: 'income', color: "#359DE7"}, 
+  {name: 'investment', color: "#FF9F47"}, 
+  {name: 'subscription', color: "#985AFA"}, 
 ];
 
 var data = {
-  categories: ['food', 'medical'], 
+  categories: [
+    {name: 'food', color: "#FFCE5E"}, 
+    {name: 'medical', color: "#EBA3B5"}
+  ], 
   subscriptions: {
     monthly: [], 
     annual: []
@@ -74,10 +79,10 @@ function populateMonthSelector() {
 
 function populateCategories() {
   const selector = document.getElementById("category");
-  const categories = [...coreCategory, ...data.categories];
+  const categories = [...coreCategories, ...data.categories];
 
-  selector.innerHTML = categories.map(item => `
-    <option>${item}</option>
+  selector.innerHTML = categories.map(category => `
+    <option>${category.name}</option>
   `).join('');
 }
 
@@ -92,6 +97,8 @@ async function loadData() {
   renderMonthlyBreakdownOverview(data.data);
 
   updateMonthlyStats(data.data);
+
+  updateCategoryList(data.categories);
 
   cleanDates();
   updateTable();
@@ -125,14 +132,17 @@ function updateTable() {
   const remaining = getRemainingBalance(data.data)
 
   const tbody = document.createElement('tbody');
-  tbody.innerHTML = data.data.map(item => `
-    <tr>
-      <td>${item.date}</td>
-      <td class="truncate" title="${item.description}">${item.description}</td>
-      <td class="text-right">${numberFormatter.format(item.amount)}</td>
-      <td>${item.category}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = data.data.map(item => {
+    const category = [...coreCategories, ...data.categories].find((category) => category.name === item.category);
+    return `
+      <tr>
+        <td>${item.date}</td>
+        <td class="truncate" title="${item.description}">${item.description}</td>
+        <td class="text-right">${numberFormatter.format(item.amount)}</td>
+        <td class="flex flex-row items-center"><div style="background-color: ${category.color}" class="rounded-full border border-base-300 size-4 mr-1"></div>${category.name}</td>
+      </tr>
+    `
+  }).join('');
 
   // last row showing remaining balance
   tbody.innerHTML += `

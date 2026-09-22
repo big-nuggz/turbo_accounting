@@ -27,7 +27,7 @@
 
           <!-- theme selector -->
           <div class="dropdown dropdown-end absolute right-0 top-0 m-2">
-            <div tabindex="0" role="button" class="btn btn-ghost rounded-full"><i class="bi bi-palette"></i></div>
+            <button tabindex="0" class="btn btn-ghost rounded-full"><i class="bi bi-palette"></i></button>
             <ul id="themeList" tabindex="-1" class="dropdown-content bg-base-300 rounded-box z-1 p-2 shadow-2xl max-h-96 overflow-y-auto"></ul>
           </div>
 
@@ -135,7 +135,19 @@
         <div id="settings" class="hidden target:block grow">
           <div class="content-container">
 
-            settings page
+            <!-- category editor -->
+            <div class="flex flex-col">
+              <h1 class="text-xl mb-2">Edit User Categories</h1>
+              <div class="">
+                <form id="categoryListForm" class="flex flex-row gap-x-1 mb-1">
+                  <input type="text" id="categoryEditInput" placeholder="grocery" class="input" required/>
+                  <button type="submit" class="btn">ADD</button>
+                </form>
+                <ul id="categoryList" class="list"></ul>
+              </div>
+            </div>
+
+            <div class="divider"></div>
 
           </div>
         </div>
