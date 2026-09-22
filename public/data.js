@@ -20,6 +20,16 @@ var data = {
   data: []
 };
 
+export async function loadData() {
+  const response = await fetch('/api/budget');
+
+  if (response.ok) {
+    data = await response.json();
+  }
+
+  return response.ok;
+}
+
 async function saveData() {
   const response = await fetch('/api/budget', {
     method: 'POST',

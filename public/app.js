@@ -1,9 +1,10 @@
 import { updateCategoryList } from "./categoryList.js";
-import { getCategories, getData, updateData } from "./data.js";
+import { getCategories, getData, loadData, updateData } from "./data.js";
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 import { populateThemes } from "./themes.js";
-import { escapeHtml } from "./utils.js";
+import { showAlert, escapeHtml } from "./utils.js";
 import { updateTable } from "./expenseTable.js";
+import { updateMonthlyStats } from "./monthlyStats.js";
 
 
 function hashChangeHandler() {
@@ -17,44 +18,38 @@ function hashChangeHandler() {
 
 window.addEventListener('hashchange', () => {
   hashChangeHandler();
-  loadData();
+  reloadAll();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
   hashChangeHandler();
-  loadData();
+  reloadAll();
   resetCalendar();
   populateMonthSelector();
   populateYearSelector();
   populateThemes();
 });
 
-export async function loadData() {
-  const response = await fetch('/api/budget');
-
-  var data = getData();
-
-  if (response.ok) {
-    data = await response.json();
-    updateData(data);
+// reloads everything
+export async function reloadAll() {
+  const loadSuccess = await loadData();
+  if (!loadSuccess) {
+    showAlert('home', `
+      <div role="alert" class="alert alert-error">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Data was not loaded.</span>
+      </div>`, 
+    5000);
   }
 
-  renderMonthlyBreakdownCategories(data.data);
-  renderMonthlyBreakdownOverview(data.data);
+  updateMonthlyStats();
+  renderMonthlyBreakdownCategories();
+  renderMonthlyBreakdownOverview();
 
-  updateCategoryList(data.categories);
+  updateCategoryList();
 
-  cleanDates();
   updateTable();
   populateCategories();
-}
-
-function cleanDates() {
-  var data = getData();
-  data.data.map(item => {
-    item.date = new Date(item.date).toISOString().split('T')[0];
-  });
-  updateData(data);
 }
 
 function resetCalendar() {
@@ -103,7 +98,7 @@ function populateCategories() {
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  var data = getData();
+  const data = getData();
   
   const date = document.getElementById('date').value;
   const description = escapeHtml(document.getElementById('description').value);
@@ -116,6 +111,6 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   // Reset form and reload
   e.target.reset();
   resetCalendar();
-  loadData();
+  reloadAll();
 });
 

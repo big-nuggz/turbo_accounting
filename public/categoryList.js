@@ -1,4 +1,4 @@
-import { loadData } from "./app.js";
+import { reloadAll } from "./app.js";
 import { getCategories, updateUserCategories } from "./data.js";
 import { escapeHtml } from "./utils.js";
 
@@ -28,7 +28,7 @@ export function updateCategoryList() {
           <input type="color" id="color" class="color-picker h-8 w-12 cursor-pointer rounded-xl border border-base-300 overflow-hidden transition hover:shadow-sm" value="${category.color}" />
         </div>
 
-        <button type="button" class="delete-btn text-slate-400 hover:text-red-500 p-1 rounded" aria-label="delete">
+        <button class="delete-btn text-slate-400 hover:text-red-500 p-1 rounded" aria-label="delete">
           <i class="bi bi-trash-fill"></i>
         </button>
       </div>
@@ -113,15 +113,19 @@ form.addEventListener('submit', (e) => {
 });
 
 function deleteItem(index) {
-  var userCategories = getCategories().user;
-  userCategories.splice(index, 1);
-  updateUserCategories(userCategories);
-  updateCategoryList();
+  const userConfirmation = confirm("Are you sure?");
+
+  if (userConfirmation) {
+    var userCategories = getCategories().user;
+    userCategories.splice(index, 1);
+    updateUserCategories(userCategories);
+    updateCategoryList();
+  }
 }
 
 function setCategoryColor(e, index) {
   var userCategories = getCategories().user;
   userCategories[index].color = e.target.value;
   updateUserCategories(userCategories);
-  loadData();
+  reloadAll();
 }

@@ -1,4 +1,5 @@
-import { getCategories, getData } from "./data.js";
+import { reloadAll } from "./app.js";
+import { getCategories, getData, updateData } from "./data.js";
 import { getRemainingBalance } from "./monthlyStats.js";
 
 export function updateTable() {
@@ -23,29 +24,56 @@ export function updateTable() {
   const remaining = getRemainingBalance(data.data)
 
   const tbody = document.createElement('tbody');
-  tbody.innerHTML = data.data.map(item => {
+
+  data.data.forEach((item, index) => {
+    const row = document.createElement('tr');
+    row.dataset.index = index;
+
     const category = [...coreCategories, ...data.categories].find((category) => category.name === item.category);
 
     const name = category !== undefined ? category.name : item.category;
     const color = category !== undefined ? category.color : '#FFF';
 
-    return `
-      <tr>
-        <td>${item.date}</td>
-        <td class="truncate" title="${item.description}">${item.description}</td>
-        <td class="text-right">${numberFormatter.format(item.amount)}</td>
-        <td class="flex flex-row items-center"><div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>${name}</td>
-      </tr>
-    `
-  }).join('');
+    row.innerHTML = `
+    <td>${item.date}</td>
+    <td class="truncate" title="${item.description}">${item.description}</td>
+    <td class="text-right">${numberFormatter.format(item.amount)}</td>
+    <td class="flex flex-row items-center">
+      <div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>
+      ${name}
+      <button class="delete-btn text-slate-400 hover:text-red-500 p-1 rounded ml-auto" aria-label="delete">
+        <i class="bi bi-trash-fill"></i>
+      </button>
+    </td>`
+
+    row.querySelector('.delete-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteItem(index);
+    });
+
+    tbody.appendChild(row);
+  });
 
   // last row showing remaining balance
-  tbody.innerHTML += `
-    <tr class="bg-accent">
-      <td class="text-accent-content">Remaining</td>
-      <td></td>
-      <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
-      <td></td>
-    </tr>`;
+  const lastRow = document.createElement('tr');
+  lastRow.classList += "bg-accent";
+  lastRow.innerHTML += `
+    <td class="text-accent-content">Remaining</td>
+    <td></td>
+    <td class="text-right text-accent-content">${numberFormatter.format(remaining)}</td>
+    <td></td>`;
+  tbody.appendChild(lastRow);
+  
   table.appendChild(tbody);
+}
+
+function deleteItem(index) {
+  const userConfirmation = confirm("Are you sure?");
+
+  if (userConfirmation) {
+    const data = getData();
+    data.data.splice(index, 1);
+    updateData(data);
+    reloadAll();
+  }
 }
