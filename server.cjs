@@ -100,6 +100,7 @@ app.post('/api/data', async (req, res) => {
   const filePath = path.join(DATA_PATH, year.toString(), `${month.toString().padStart(2, '0')}.json`);
 
   try {
+    await fs.mkdir(path.dirname(filePath), {recursive: true});
     await fs.writeFile(filePath, JSON.stringify(req.body, null, 2), 'utf8');
     res.json({ success: true });
   } catch (err) {
