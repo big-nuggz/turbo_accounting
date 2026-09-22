@@ -1,6 +1,7 @@
 import { renderMonthlyBreakdownCategories, renderMonthlyBreakdownOverview } from "./monthlyCharts.js";
 import { getRemainingBalance, updateMonthlyStats } from "./monthlyStats.js";
 import { populateThemes } from "./themes.js";
+import { escapeHtml } from "./utils.js";
 
 // core categories are not editable by user
 const coreCategory = [
@@ -148,7 +149,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   
   const date = document.getElementById('date').value;
-  const description = document.getElementById('description').value;
+  const description = escapeHtml(document.getElementById('description').value);
   const amount = parseFloat(document.getElementById('amount').value);
   const category = document.getElementById('category').value;
 
