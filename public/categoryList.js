@@ -39,6 +39,11 @@ export function updateCategoryList() {
       deleteItem(index);
     });
 
+    li.querySelector('.color-picker').addEventListener('change', (e) => {
+      e.stopPropagation();
+      setCategoryColor(e, index);
+    });
+
     list.appendChild(li);
   });
 }
@@ -111,4 +116,10 @@ function deleteItem(index) {
   userCategories.splice(index, 1);
   updateUserCategories(userCategories);
   updateCategoryList();
+}
+
+function setCategoryColor(e, index) {
+  var userCategories = getCategories().user;
+  userCategories[index].color = e.target.value;
+  updateUserCategories(userCategories);
 }
