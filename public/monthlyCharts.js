@@ -1,3 +1,5 @@
+import { getCategories } from "./app.js";
+
 export function renderMonthlyBreakdownCategories(data) {
   const ctx = document.getElementById('monthlyBreakdownChartCategories');
 
@@ -16,12 +18,19 @@ export function renderMonthlyBreakdownCategories(data) {
     .map(([category, amount]) => ({category, amount}))
     .sort((a, b) => b.amount - a.amount);
 
+  const categoriesAll = getCategories();
+  const categories = [...categoriesAll.core, ...categoriesAll.user];
+
+  const colorMap = new Map(categories.map(item => [item.name, item.color]));
+  const colors = totalsSorted.map(item => colorMap.get(item.category));
+
   new Chart(
     ctx, {
     type: 'doughnut', 
     data: {
       datasets: [{
-        data: totalsSorted.map(item => item.amount)
+        data: totalsSorted.map(item => item.amount), 
+        backgroundColor: colors
       }], 
       labels: totalsSorted.map(item => item.category)
     }
@@ -59,12 +68,25 @@ export function renderMonthlyBreakdownOverview(data) {
     .map(([category, amount]) => ({category, amount}))
     .sort((a, b) => b.amount - a.amount);
 
+  const categories = getCategories().core;
+
+  const colorMap = new Map(categories.map(item => [item.name, item.color]));
+  const colors = totalsSorted.map(item => {
+    if (item.category == "savings")
+      return colorMap.get("income")
+    else if (item.category == "spendings")
+      return colorMap.get("other")
+    
+    return colorMap.get(item.category)
+  });
+
   new Chart(
     ctx, {
     type: 'doughnut', 
     data: {
       datasets: [{
-        data: totalsSorted.map(item => item.amount)
+        data: totalsSorted.map(item => item.amount), 
+        backgroundColor: colors
       }], 
       labels: totalsSorted.map(item => item.category)
     }

@@ -35,6 +35,7 @@ function hashChangeHandler() {
 
 window.addEventListener('hashchange', () => {
   hashChangeHandler();
+  loadData();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
