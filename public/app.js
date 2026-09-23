@@ -7,7 +7,7 @@ import { updateTable } from "./expenseTable.js";
 import { updateMonthlyStats } from "./monthlyStats.js";
 import { getSelectedYearAndMonth, initializeMonthNavigator } from "./monthNavigator.js";
 import { setCurrencyInput } from "./currencyForm.js";
-import { initializeAnnualSubscriptionForm } from "./annualSubscriptions.js";
+import { initializeAnnualSubscriptionForm, updateAnnualSubscriptions } from "./annualSubscriptions.js";
 import { updateMonthlySubscriptions } from "./monthlySubscriptions.js";
 
 
@@ -62,6 +62,7 @@ export async function reloadAll() {
   populateCategories();
 
   updateMonthlySubscriptions();
+  updateAnnualSubscriptions();
 
   resetCalendar();
   populateThemes();
