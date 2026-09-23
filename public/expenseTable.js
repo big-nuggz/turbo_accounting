@@ -41,7 +41,7 @@ export function updateTable(data, currency) {
     <td class="truncate" title="${item.description}">${item.description}</td>
     <td class="text-right">${currency}${numberFormatter.format(item.amount)}</td>
     <td class="flex flex-row items-center">
-      <div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 mr-1"></div>
+      <div style="background-color: ${color}" class="rounded-full border border-base-300 size-4 min-w-4 min-h-4 mr-1"></div>
       ${name}
       <button class="delete-btn text-slate-400 hover:text-red-500 p-1 rounded ml-auto" aria-label="delete">
         <i class="bi bi-trash-fill"></i>

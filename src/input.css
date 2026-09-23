@@ -6,6 +6,19 @@
 
 @import "bootstrap-icons/font/bootstrap-icons";
 
+/* scaling for mobile */
+@layer base {
+  html {
+    font-size: 80%;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 100%;
+    }
+  }
+}
+
 /* user defined classes */
 @layer components {
   .content-container {
