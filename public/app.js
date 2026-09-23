@@ -8,6 +8,7 @@ import { updateMonthlyStats } from "./monthlyStats.js";
 import { getSelectedYearAndMonth, initializeMonthNavigator } from "./monthNavigator.js";
 import { setCurrencyInput } from "./currencyForm.js";
 import { initializeAnnualSubscriptionForm } from "./annualSubscriptions.js";
+import { updateMonthlySubscriptions } from "./monthlySubscriptions.js";
 
 
 function hashChangeHandler() {
@@ -59,6 +60,8 @@ export async function reloadAll() {
 
   updateCategoryList();
   populateCategories();
+
+  updateMonthlySubscriptions();
 
   resetCalendar();
   populateThemes();

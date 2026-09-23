@@ -173,8 +173,8 @@
             <div class="flex flex-col">
               <h1 class="text-xl mb-2">Edit Recurring Payments</h1>
               <p class="mb-4">
-                Add and modify recurring payments here, such as subscriptions and bills. <br />
-                Payments setup here will be added at the first day of the month in specified frequency. <br />
+                Add and modify fixed price recurring payments (and income) here, such as subscriptions and bills. <br />
+                Payments setup here will be automatically added at the first day of the month in specified frequency. <br />
                 Deleting an item here will not retroactively affect existing data, only future months.
               </p>
 
@@ -190,7 +190,14 @@
                     <button type="submit" class="btn">ADD</button>
                   </form>
                   <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
-                    <ul id="monthlySubscriptionList" class="list"></ul>
+                    <table id="monthlySubscriptionTable" class="table table-fixed table-zebra">
+                      <thead>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
                   </div>
                 </div>
 
@@ -216,7 +223,15 @@
                     </div>
                   </form>
                   <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
-                    <ul id="annualSubscriptionList" class="list"></ul>
+                    <table id="annualSubscriptionTable" class="table table-fixed table-zebra">
+                      <thead>
+                        <th>Month</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
                   </div>
                 </div>
 
