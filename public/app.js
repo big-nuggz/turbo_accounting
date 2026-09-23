@@ -105,13 +105,21 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
 
   const yearAndMonth = getSelectedYearAndMonth();
   const data = await getData(yearAndMonth.year, yearAndMonth.month);
+
+  if (data.length === 0)
+    handleSubscriptions(data, yearAndMonth.year, yearAndMonth.month);
   
   const date = document.getElementById('date').value;
   const description = escapeHtml(document.getElementById('description').value);
   const amount = parseFloat(document.getElementById('amount').value);
   const category = document.getElementById('category').value;
 
-  data.push({ description, amount, category, date });
+  data.push({
+    description: description, 
+    amount: amount, 
+    category: category,
+    date: date});
+
   await updateData(data, yearAndMonth.year, yearAndMonth.month);
 
   // Reset form and reload
@@ -120,3 +128,29 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   reloadAll();
 });
 
+function handleSubscriptions(data, year, month) {
+  const profile = getProfile();
+
+  date = [year.toString(), month.toString().padStart(2, '0'), '01'].join('-');
+
+  // monthly
+  profile.subscription.monthly.forEach((subscription) => {
+    data.push({
+      description: subscription.description, 
+      amount: subscription.amount, 
+      category: subscription.category,
+      date: date});
+  });
+
+  // annual
+  profile.subscription.annual.forEach((subscription) => {
+    if (month.toString().padStart(2, '0') === subscription.month.toString().padStart(2, '0'))
+    {
+      data.push({
+        description: subscription.description, 
+        amount: subscription.amount, 
+        category: subscription.category,
+        date: date});
+    }
+  });
+}
