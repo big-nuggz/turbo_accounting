@@ -9,7 +9,7 @@
 /* user defined classes */
 @layer components {
   .content-container {
-    @apply max-w-7xl place-content-center mx-auto;
+    @apply max-w-7xl place-content-center mx-auto mb-4 p-2;
   }
 
   .color-picker {
