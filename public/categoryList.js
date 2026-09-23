@@ -13,7 +13,7 @@ export function updateCategoryList() {
   list.innerHTML = '';
   categories.forEach((category, index) => {
     const li = document.createElement('li');
-    li.className = 'group flex items-center justify-between list-row transition-all cursor-grab active:cursor-grabbing select-none';
+    li.className = 'group flex items-center justify-between list-row transition-all cursor-grab hover:bg-base-200 active:cursor-grabbing select-none';
     li.draggable = true;
     li.dataset.index = index;
 

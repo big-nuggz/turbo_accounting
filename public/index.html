@@ -43,7 +43,7 @@
             <div class="flex flex-col md:flex-row">
 
               <!-- input form & table -->
-              <div class="bg-base-100 h-auto m-1 md:max-w-2xl">
+              <div class="bg-base-100 h-auto m-1 flex-1">
 
                 <!-- page month selector -->
                 <div class="flex flex-row gap-x-1">
@@ -87,10 +87,10 @@
 
               </div>
               
-              <div class="divider sm:divider-horizontal"></div>
+              <div class="divider md:divider-horizontal"></div>
 
-              <!-- charts -->
-              <div class="flex flex-col grow">
+              <!-- charts and stats -->
+              <div class="flex flex-col flex-1">
                 
                 <!-- stats -->
                 <div class="stats bg-base-100 border-base-300 border shadow-sm">
@@ -111,8 +111,9 @@
                 </div>
 
                 <div class="divider"></div>
-
-                <div class="flex md:flex-row flex-col">
+                
+                <!-- charts -->
+                <div class="flex md:flex-row flex-col md:max-w-full max-w-lg mx-auto">
                   <div>
                     <p class="text-center text-xl m-1">Spending Breakdown</p>
                     <canvas id="monthlyBreakdownChartCategories" class="m-1"></canvas>
@@ -173,18 +174,38 @@
               <h1 class="text-xl mb-2">Edit Recurring Payments</h1>
               <p class="mb-4">Add and modify recurring payments here, such as subscriptions and bills.</p>
 
-              <div class="">
-                <form id="subscriptionListForm" class="flex flex-row gap-x-1 mb-2">
-                  <input type="text" id="subscriptionEditDescription" placeholder="netflix" class="input" required/>
-                  <input type="number" id="subscriptionEditAmount" placeholder="1280.0" class="input" required/>
-                  <select id="categorySubscription" class="select"></select>     
-                  <input type="radio" name="radio-1" class="radio" checked="checked" />
-                  <input type="radio" name="radio-1" class="radio" />
-                  <button type="submit" class="btn">ADD</button>
-                </form>
-                <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
-                  <ul id="subscriptionList" class="list"></ul>
+              <div class="flex md:flex-row flex-col">
+
+                <!-- monthly subscription -->
+                <div class="flex-1">
+                  <p class="mb-4">Monthly</p>
+                  <form id="monthlySubscriptionForm" class="flex flex-row gap-x-1 mb-2">
+                    <input type="text" id="monthlySubscriptionDescription" placeholder="netflix" class="input" required/>
+                    <input type="number" id="monthlySubscriptionAmount" placeholder="1280.0" class="input" required/>
+                    <select id="monthlySubscriptionCategory" class="select"></select>     
+                    <button type="submit" class="btn">ADD</button>
+                  </form>
+                  <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
+                    <ul id="monthlySubscriptionList" class="list"></ul>
+                  </div>
                 </div>
+
+                <div class="divider md:divider-horizontal"></div>
+
+                <!-- annual subscription -->
+                <div class="flex-1">
+                  <p class="mb-4">Annual</p>
+                  <form id="annualSubscriptionForm" class="flex flex-row gap-x-1 mb-2">
+                    <input type="text" id="annualSubscriptionDescription" placeholder="amazon prime" class="input" required/>
+                    <input type="number" id="annualSubscriptionAmount" placeholder="5900.0" class="input" required/>
+                    <select id="annualSubscriptionCategory" class="select"></select>     
+                    <button type="submit" class="btn">ADD</button>
+                  </form>
+                  <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
+                    <ul id="annualSubscriptionList" class="list"></ul>
+                  </div>
+                </div>
+
               </div>
             </div>
 
