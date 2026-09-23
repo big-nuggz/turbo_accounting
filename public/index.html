@@ -172,7 +172,11 @@
             <!-- recurring payment editor -->
             <div class="flex flex-col">
               <h1 class="text-xl mb-2">Edit Recurring Payments</h1>
-              <p class="mb-4">Add and modify recurring payments here, such as subscriptions and bills.</p>
+              <p class="mb-4">
+                Add and modify recurring payments here, such as subscriptions and bills. <br />
+                Payments setup here will be added at the first day of the month in specified frequency. <br />
+                Deleting an item here will not retroactively affect existing data, only future months.
+              </p>
 
               <div class="flex md:flex-row flex-col">
 
@@ -195,11 +199,21 @@
                 <!-- annual subscription -->
                 <div class="flex-1">
                   <p class="mb-4">Annual</p>
-                  <form id="annualSubscriptionForm" class="flex flex-row gap-x-1 mb-2">
-                    <input type="text" id="annualSubscriptionDescription" placeholder="amazon prime" class="input" required/>
-                    <input type="number" id="annualSubscriptionAmount" placeholder="5900.0" class="input" required/>
-                    <select id="annualSubscriptionCategory" class="select"></select>     
-                    <button type="submit" class="btn">ADD</button>
+                  <form id="annualSubscriptionForm" class="flex flex-col mb-2">
+                    <div class="flex flex-row gap-x-1 mb-1">
+                      <input type="text" id="annualSubscriptionDescription" placeholder="amazon prime" class="input" required/>
+                      <input type="number" id="annualSubscriptionAmount" placeholder="5900.0" class="input" required/>
+                      <select id="annualSubscriptionCategory" class="select"></select>
+                    </div>
+
+                    <div class="flex flex-row gap-x-1">
+                      <label class="select w-auto">
+                        <span class="label">Month</span>
+                        <select id="annualSubscriptionMonth">
+                        </select>
+                      </label>   
+                      <button type="submit" class="btn">ADD</button>
+                    </div>
                   </form>
                   <div class="border border-base-300 rounded-xl shadow-sm min-h-12">
                     <ul id="annualSubscriptionList" class="list"></ul>

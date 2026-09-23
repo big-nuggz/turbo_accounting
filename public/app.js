@@ -7,6 +7,7 @@ import { updateTable } from "./expenseTable.js";
 import { updateMonthlyStats } from "./monthlyStats.js";
 import { getSelectedYearAndMonth, initializeMonthNavigator } from "./monthNavigator.js";
 import { setCurrencyInput } from "./currencyForm.js";
+import { initializeAnnualSubscriptionForm } from "./annualSubscriptions.js";
 
 
 function hashChangeHandler() {
@@ -26,6 +27,7 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('DOMContentLoaded', async () => {
   hashChangeHandler();
   initializeMonthNavigator();
+  initializeAnnualSubscriptionForm();
   reloadAll();
 });
 
@@ -73,16 +75,25 @@ function resetCalendar() {
   document.getElementById('date').value = localDate;
 }
 
-function populateCategories() {
+export function populateCategories() {
   const profile = getProfile();
   const coreCategories = getCategories().core;
-
-  const selector = document.getElementById("category");
   const categories = [...coreCategories, ...profile.categories];
 
-  selector.innerHTML = categories.map(category => `
+  const selectorMain = document.getElementById("category");
+  const selectorMonthlySubscription = document.getElementById("monthlySubscriptionCategory");
+  const selectorAnnualSubscription = document.getElementById("annualSubscriptionCategory");
+
+  const options = categories.map(category => `
     <option>${category.name}</option>
   `).join('');
+
+  selectorMain.innerHTML = options;
+  selectorMonthlySubscription.innerHTML = options;
+  selectorAnnualSubscription.innerHTML = options;
+
+  selectorMonthlySubscription.value = "subscription";
+  selectorAnnualSubscription.value = "subscription";
 }
 
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {

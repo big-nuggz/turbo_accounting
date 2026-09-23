@@ -1,4 +1,4 @@
-import { reloadAll } from "./app.js";
+import { populateCategories, reloadAll } from "./app.js";
 import { getCategories, updateUserCategories } from "./data.js";
 import { escapeHtml } from "./utils.js";
 
@@ -47,6 +47,8 @@ export function updateCategoryList() {
 
     list.appendChild(li);
   });
+
+  populateCategories();
 }
 
 // Drag & Drop Handlers
