@@ -77,8 +77,11 @@ export function getDataList() {
 export async function getData(year, month) {
   const response = await fetch(`/api/data?year=${year}&month=${month}`);
 
-  if (response.ok)
-    return await response.json();
+  if (response.ok){
+    const responseData =  await response.json();
+    responseData.sort((a, b) => new Date(a.date) - new Date(b.date));
+    return responseData;
+  }
 
   return [];
 }
