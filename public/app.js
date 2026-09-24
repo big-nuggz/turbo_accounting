@@ -103,13 +103,17 @@ export function populateCategories() {
 document.getElementById('expenseForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const yearAndMonth = getSelectedYearAndMonth();
-  const data = await getData(yearAndMonth.year, yearAndMonth.month);
+  const date = document.getElementById('date').value;
+  const dateObj = new Date(date);
+
+  const year = dateObj.getUTCFullYear();
+  const month = dateObj.getUTCMonth() + 1;
+
+  const data = await getData(year, month);
 
   if (data.length === 0)
-    handleSubscriptions(data, yearAndMonth.year, yearAndMonth.month);
+    handleSubscriptions(data, year, month);
   
-  const date = document.getElementById('date').value;
   const description = escapeHtml(document.getElementById('description').value);
   const amount = parseFloat(document.getElementById('amount').value);
   const category = document.getElementById('category').value;
@@ -120,7 +124,7 @@ document.getElementById('expenseForm').addEventListener('submit', async (e) => {
     category: category,
     date: date});
 
-  await updateData(data, yearAndMonth.year, yearAndMonth.month);
+  await updateData(data, year, month);
 
   // Reset form and reload
   e.target.reset();
